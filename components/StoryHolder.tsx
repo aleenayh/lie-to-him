@@ -1,31 +1,72 @@
 import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
 import { Image } from "expo-image";
-import { type ImageSourcePropType, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  type ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { tarotImages } from "../assets/images/tarot";
+import DescriptionOfSuit from "./cards/DescriptionOfSuit";
+import ModalComponent from "./Modal";
 
 export default function StoryHolder() {
   const {
     gameState: { story },
   } = useGame();
   const images = findImagesFromValues(story);
+
+  const [modalDescriptionSuit, setModalDescriptionSuit] = useState<
+    "swords" | "wands" | "cups" | "pentacles"
+  >("swords");
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModalForSuit = (
+    suit: "swords" | "wands" | "cups" | "pentacles",
+  ) => {
+    setModalDescriptionSuit(suit);
+    setModalOpen(true);
+  };
   return (
-    <View style={styles.column}>
-      <Text style={styles.title}> Your Story</Text>
-      <View style={styles.row}>
-        <View style={[styles.imageContainer]}>
-          <Image source={images.swords} style={styles.image} />
-        </View>
-        <View style={[styles.imageContainer]}>
-          <Image source={images.wands} style={styles.image} />
-        </View>
-        <View style={[styles.imageContainer]}>
-          <Image source={images.cups} style={styles.image} />
-        </View>
-        <View style={[styles.imageContainer]}>
-          <Image source={images.pentacles} style={styles.image} />
+    <View style={{ position: "relative" }}>
+      <View style={styles.column}>
+        <Text style={styles.title}> Your Story</Text>
+        <View style={styles.row}>
+          <Pressable
+            style={[styles.imageContainer]}
+            onPress={() => openModalForSuit("swords")}
+          >
+            <Image source={images.swords} style={styles.image} />
+          </Pressable>
+          <Pressable
+            style={[styles.imageContainer]}
+            onPress={() => openModalForSuit("wands")}
+          >
+            <Image source={images.wands} style={styles.image} />
+          </Pressable>
+          <Pressable
+            style={[styles.imageContainer]}
+            onPress={() => openModalForSuit("cups")}
+          >
+            <Image source={images.cups} style={styles.image} />
+          </Pressable>
+          <Pressable
+            style={[styles.imageContainer]}
+            onPress={() => openModalForSuit("pentacles")}
+          >
+            <Image source={images.pentacles} style={styles.image} />
+          </Pressable>
         </View>
       </View>
+      <ModalComponent
+        visible={modalOpen}
+        onRequestClose={() => setModalOpen(false)}
+      >
+        <DescriptionOfSuit suit={modalDescriptionSuit} image={images[modalDescriptionSuit]} />
+      </ModalComponent>
     </View>
   );
 }
@@ -41,7 +82,6 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 150,
     overflow: "visible",
-    paddingBottom: 70,
   },
   title: {
     fontSize: 24,

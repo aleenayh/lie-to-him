@@ -88,7 +88,7 @@ export default function Unlock() {
               </Text>
             )}
 
-            <Pressable style={styles.button} onPress={() => router.back()}>
+            <Pressable style={styles.button} onPress={() => router.push("/")}>
               <Text style={styles.buttonText}>Back</Text>
             </Pressable>
           </View>

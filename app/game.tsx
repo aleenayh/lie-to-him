@@ -1,18 +1,38 @@
 import DisplayTarotCard from "@components/cards/DisplayTarotCard";
+import ContentBlocked from "@components/ContentBlocked";
 import DesperationChain from "@components/DesperationChain";
 import DishonestyChain from "@components/DishonestyChain";
 import StoryHolder from "@components/StoryHolder";
 import { useGame } from "@state/Context";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import ModalComponent from "../components/Modal";
 
 export default function Game() {
-  const {
-    gameState: { turnCount },
-  } = useGame();
+  const { gameState, updateGameState, contentUnlocked } = useGame();
   const [cardVisible, setCardVisible] = useState(false);
+  const [towerVisible, setTowerVisible] = useState(false);
+  const [showBlocked, setShowBlocked] = useState(
+    !contentUnlocked && gameState.turnCount >= 5,
+  );
+
+  const transitionTo = (type: "tower" | "base") => {
+    if (type === "tower") {
+      setCardVisible(false);
+      setTowerVisible(true);
+    } else {
+      updateGameState({ ...gameState, turnCount: gameState.turnCount + 1 });
+      setCardVisible(false);
+      setTowerVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!contentUnlocked && gameState.turnCount >= 5) {
+      setShowBlocked(true);
+    }
+  }, [contentUnlocked, gameState.turnCount]);
 
   return (
     <View style={styles.container}>
@@ -21,7 +41,7 @@ export default function Game() {
           <Text style={styles.backButtonText}>←</Text>
         </Pressable>
         <Text style={styles.header}>Lie To Him</Text>
-        <Text style={styles.text}>Turn {turnCount}</Text>
+        <Text style={styles.text}>Turn {gameState.turnCount}</Text>
         <View style={styles.gameGrid}>
           <DesperationChain />
           <View
@@ -37,9 +57,6 @@ export default function Game() {
             <Pressable onPress={() => setCardVisible(true)}>
               <Text style={styles.button}>Draw</Text>
             </Pressable>
-            <Pressable onPress={() => router.push("/tower")}>
-              <Text style={styles.button}>Tower</Text>
-            </Pressable>
           </View>
           <DishonestyChain />
         </View>
@@ -47,9 +64,21 @@ export default function Game() {
       </View>
       <ModalComponent
         visible={cardVisible}
-        onRequestClose={() => setCardVisible(false)}
+        onRequestClose={() => transitionTo("tower")}
       >
         <DisplayTarotCard cardKey="empress" />
+      </ModalComponent>
+      <ModalComponent
+        visible={towerVisible}
+        onRequestClose={() => transitionTo("base")}
+      >
+        <Text>Tower - TODO </Text>
+      </ModalComponent>
+      <ModalComponent
+        visible={showBlocked}
+        onRequestClose={() => router.push("/unlock")}
+      >
+        <ContentBlocked />
       </ModalComponent>
     </View>
   );
