@@ -10,7 +10,6 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableWithoutFeedback,
   View,
 } from "react-native";
 
@@ -44,7 +43,10 @@ export default function Unlock() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.keyboardAvoidingView}
     >
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <Pressable
+        onPress={() => Keyboard.dismiss()}
+        style={{ height: "100%", width: "100%" }}
+      >
         <View style={styles.container}>
           <Image source={skeletonImage} style={styles.backgroundImage} />
           <Image
@@ -91,7 +93,7 @@ export default function Unlock() {
             </Pressable>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 }

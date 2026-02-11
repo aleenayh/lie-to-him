@@ -10,31 +10,29 @@ export default function ModalComponent({
   children?: React.ReactNode;
 }) {
   return (
-
-          <Modal
+    <Modal
       animationType="slide"
       visible={visible}
       onRequestClose={onRequestClose}
     >
-          <View style={styles.background}>
-      <View style={styles.modalContainer}>
-        {children}
-        <Pressable onPress={onRequestClose} style={styles.button}>
-          <Text style={styles.buttonText}>continue</Text>
-        </Pressable>
-      </View>
+      <View style={styles.background}>
+        <View style={styles.modalContainer}>
+          {children}
+          <Pressable onPress={onRequestClose} style={styles.button}>
+            <Text style={styles.buttonText}>continue</Text>
+          </Pressable>
+        </View>
       </View>
     </Modal>
-
   );
 }
 
 const styles = StyleSheet.create({
   background: {
     backgroundColor: "papayawhip",
-    flex:1,
+    flex: 1,
     height: "100%",
-    width: "100%"
+    width: "100%",
   },
   modalContainer: {
     flex: 1,
@@ -44,10 +42,7 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#e7cda7",
     borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
     elevation: 5,
   },
   button: {

@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 export default function Tower() {
   return (
@@ -21,7 +21,7 @@ export default function Tower() {
           alignItems: "center",
         }}
       >
-        TODO!
+        <Text>TODO!</Text>
       </View>
     </View>
   );
