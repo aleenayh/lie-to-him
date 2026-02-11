@@ -4,7 +4,7 @@ import { useGame } from "@state/Context";
 import { defaultGameState } from "@state/default";
 import { useFonts } from "expo-font";
 import { Image } from "expo-image";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -33,7 +33,7 @@ export default function Index() {
 
   const restartAndReroute = () => {
     updateGameState(defaultGameState());
-    return <Redirect href={"/game"} />;
+    router.push("/game");
   };
 
   return (

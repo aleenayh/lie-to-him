@@ -1,7 +1,7 @@
-import DisplayTarotCard from "@/components/cards/DisplayTarotCard";
-import DesperationChain from "@/components/DesperationChain";
-import DishonestyChain from "@/components/DishonestyChain";
-import StoryHolder from "@/components/StoryHolder";
+import DisplayTarotCard from "@components/cards/DisplayTarotCard";
+import DesperationChain from "@components/DesperationChain";
+import DishonestyChain from "@components/DishonestyChain";
+import StoryHolder from "@components/StoryHolder";
 import { useGame } from "@state/Context";
 import { router } from "expo-router";
 import { useState } from "react";
