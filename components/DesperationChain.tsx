@@ -1,4 +1,4 @@
-import { useGame } from "@/state/Context";
+import { useGame } from "@state/Context";
 import { StyleSheet, Text, View } from "react-native";
 
 const TEXT_LENGTH = 115;

@@ -1,110 +1,110 @@
-import { useGame } from "@/state/Context";
-import type { GameState } from "@/state/schema";
+import { useGame } from "@state/Context";
+import type { GameState } from "@state/schema";
 import { Image } from "expo-image";
 import { type ImageSourcePropType, StyleSheet, Text, View } from "react-native";
 import { tarotImages } from "../assets/images/tarot";
 
 export default function StoryHolder() {
-	const {
-		gameState: { story },
-	} = useGame();
-	const images = findImagesFromValues(story);
-	return (
-		<View style={styles.column}>
-			<Text style={styles.title}> Your Story</Text>
-			<View style={styles.row}>
-				<View style={[styles.imageContainer]}>
-					<Image source={images.swords} style={styles.image} />
-				</View>
-				<View style={[styles.imageContainer]}>
-					<Image source={images.wands} style={styles.image} />
-				</View>
-				<View style={[styles.imageContainer]}>
-					<Image source={images.cups} style={styles.image} />
-				</View>
-				<View style={[styles.imageContainer]}>
-					<Image source={images.pentacles} style={styles.image} />
-				</View>
-			</View>
-		</View>
-	);
+  const {
+    gameState: { story },
+  } = useGame();
+  const images = findImagesFromValues(story);
+  return (
+    <View style={styles.column}>
+      <Text style={styles.title}> Your Story</Text>
+      <View style={styles.row}>
+        <View style={[styles.imageContainer]}>
+          <Image source={images.swords} style={styles.image} />
+        </View>
+        <View style={[styles.imageContainer]}>
+          <Image source={images.wands} style={styles.image} />
+        </View>
+        <View style={[styles.imageContainer]}>
+          <Image source={images.cups} style={styles.image} />
+        </View>
+        <View style={[styles.imageContainer]}>
+          <Image source={images.pentacles} style={styles.image} />
+        </View>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-	column: {
-		alignSelf: "flex-end",
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		gap: 2,
-		width: "100%",
-		height: 150,
-		overflow: "visible",
-		paddingBottom: 70,
-	},
-	title: {
-		fontSize: 24,
-		textAlign: "center",
-		color: "#9a5341",
-		fontFamily: "typewriter",
-		marginBottom: 10,
-	},
-	row: {
-		display: "flex",
-		flex: 1,
-		flexDirection: "row",
-		justifyContent: "center",
-		alignItems: "center",
-		gap: 2,
-		overflow: "visible",
-		minHeight: 160,
-	},
-	imageContainer: {
-		flex: 1,
-		display: "flex",
-	},
-	image: {
-		resizeMode: "contain",
-		width: "auto",
-		height: 150,
-	},
+  column: {
+    alignSelf: "flex-end",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 2,
+    width: "100%",
+    height: 150,
+    overflow: "visible",
+    paddingBottom: 70,
+  },
+  title: {
+    fontSize: 24,
+    textAlign: "center",
+    color: "#9a5341",
+    fontFamily: "typewriter",
+    marginBottom: 10,
+  },
+  row: {
+    display: "flex",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 2,
+    overflow: "visible",
+    minHeight: 160,
+  },
+  imageContainer: {
+    flex: 1,
+    display: "flex",
+  },
+  image: {
+    resizeMode: "contain",
+    width: "auto",
+    height: 150,
+  },
 });
 
 function findImagesFromValues(story: GameState["story"]): {
-	wands: ImageSourcePropType;
-	cups: ImageSourcePropType;
-	pentacles: ImageSourcePropType;
-	swords: ImageSourcePropType;
+  wands: ImageSourcePropType;
+  cups: ImageSourcePropType;
+  pentacles: ImageSourcePropType;
+  swords: ImageSourcePropType;
 } {
-	const cleanedValue = (value: number) => {
-		if (value === 11) {
-			return "page";
-		} else if (value === 12) {
-			return "knight";
-		} else if (value === 13) {
-			return "queen";
-		} else if (value === 14) {
-			return "king";
-		} else if (value === 1) {
-			return "ace";
-		}
-		return value;
-	};
-	const wands = cleanedValue(story.wands.cardValue);
-	const cups = cleanedValue(story.cups.cardValue);
-	const pentacles = cleanedValue(story.pentacles.cardValue);
-	const swords = cleanedValue(story.swords.cardValue);
+  const cleanedValue = (value: number) => {
+    if (value === 11) {
+      return "page";
+    } else if (value === 12) {
+      return "knight";
+    } else if (value === 13) {
+      return "queen";
+    } else if (value === 14) {
+      return "king";
+    } else if (value === 1) {
+      return "ace";
+    }
+    return value;
+  };
+  const wands = cleanedValue(story.wands.cardValue);
+  const cups = cleanedValue(story.cups.cardValue);
+  const pentacles = cleanedValue(story.pentacles.cardValue);
+  const swords = cleanedValue(story.swords.cardValue);
 
-	const flippedImg = tarotImages.cardBack;
+  const flippedImg = tarotImages.cardBack;
 
-	const images = {
-		wands: story.wands.flipped ? flippedImg : tarotImages[`wands_${wands}`],
-		cups: story.cups.flipped ? flippedImg : tarotImages[`cups_${cups}`],
-		pentacles: story.pentacles.flipped
-			? flippedImg
-			: tarotImages[`pent_${pentacles}`],
-		swords: story.swords.flipped ? flippedImg : tarotImages[`swords_${swords}`],
-	};
-	return images;
+  const images = {
+    wands: story.wands.flipped ? flippedImg : tarotImages[`wands_${wands}`],
+    cups: story.cups.flipped ? flippedImg : tarotImages[`cups_${cups}`],
+    pentacles: story.pentacles.flipped
+      ? flippedImg
+      : tarotImages[`pent_${pentacles}`],
+    swords: story.swords.flipped ? flippedImg : tarotImages[`swords_${swords}`],
+  };
+  return images;
 }

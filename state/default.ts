@@ -1,4 +1,4 @@
-import { shuffleCards } from "@/components/cards/cards";
+import { shuffleCards } from "@components/cards/cards";
 
 export const defaultGameState = () => {
   const { wands, cups, pentacles, swords, deck } = shuffleCards();
