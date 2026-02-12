@@ -23,7 +23,9 @@ export const defaultGameState = () => {
         flipped: false,
       },
     },
-    tower: {}, //TODO
+    tower: {
+      nextBlockPull: 0, 
+    }, //TODO
     deck,
     turnCount: 0,
   };
