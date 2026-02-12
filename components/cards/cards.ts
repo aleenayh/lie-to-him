@@ -6,7 +6,7 @@ type Effect = {
   adjustment: number;
 };
 
-type CardDetails = {
+export type CardDetails = {
   name: string;
   image: ImageSourcePropType;
 } & (
@@ -272,13 +272,13 @@ export const cards: Record<string, CardDetails> = {
     effectUpright: [{ type: "desperation", adjustment: -1 }],
     effectReversed: [{ type: "desperation", adjustment: 1 }],
   },
-  judgment: {
-    name: "Judgment",
+  judgement: {
+    name: "Judgement",
     descriptionUpright:
       "Lying is wrong. Every child knows that. But sometimes, one must do something wrong in order to achieve a great right. And your goals are right. Aren’t they? Pull 2 blocks.",
     descriptionReversed:
       "Lying is wrong. You know that lying is wrong. He trusts you. Or he used to. Do you remember that? Do you remember what it felt like to deserve that? Pull 4 blocks.",
-    image: tarotImages.ma_judgment,
+    image: tarotImages.ma_judgement,
     type: "majorArcana",
     effectUpright: [{ type: "nextBlockPull", adjustment: 2 }],
     effectReversed: [{ type: "nextBlockPull", adjustment: 4 }],
