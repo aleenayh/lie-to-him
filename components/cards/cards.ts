@@ -6,7 +6,7 @@ type Effect = {
   adjustment: number;
 };
 
-type CardDetails = {
+export type CardDetails = {
   name: string;
   image: ImageSourcePropType;
 } & (

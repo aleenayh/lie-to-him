@@ -66,7 +66,7 @@ export default function Game() {
         visible={cardVisible}
         onRequestClose={() => transitionTo("tower")}
       >
-        <DisplayTarotCard cardKey="empress" />
+        <DisplayTarotCard />
       </ModalComponent>
       <ModalComponent
         visible={towerVisible}
