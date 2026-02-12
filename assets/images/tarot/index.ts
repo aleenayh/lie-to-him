@@ -28,8 +28,10 @@ const ma_sun = require("./ma_sun.jpg");
 const ma_priestess = require("./ma_priestess.jpg");
 const ma_temperance = require("./ma_temperance.jpg");
 const ma_star = require("./ma_star.jpg");
+const ma_emperor = require("./ma_emperor.jpg");
 const ma_strength = require("./ma_strength.jpg");
 const ma_judgement = require("./ma_judgement.jpg");
+const ma_devil = require("./ma_devil.jpg");
 const ma_hermit = require("./ma_hermit.jpg");
 const ma_wheel = require("./ma_wheel.jpg");
 const ma_tower = require("./ma_tower.jpg");
@@ -86,6 +88,8 @@ export const tarotImages: Record<string, ImageSourcePropType> = {
   ma_chariot,
   ma_hierophant,
   ma_empress,
+  ma_emperor,
+  ma_devil,
   ma_strength,
   ma_hermit,
   ma_wheel,

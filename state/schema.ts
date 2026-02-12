@@ -21,7 +21,10 @@ export const gameStateSchema = z.object({
       flipped: z.boolean(),
     }),
   }),
-  tower: z.any(), //TODO
+  tower: z.object({
+    nextBlockPull: z.coerce.number().catch(0), //adjustment ++ to base
+    //more fields to come, TODO
+  }),
   deck: z.array(z.string()),
   turnCount: z.number(),
 });
