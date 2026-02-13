@@ -1,6 +1,7 @@
-import { type CardDetails, cards } from "@components/cards/cards";
-import DisplayTarotCard from "@components/cards/DisplayTarotCard";
 import ContentBlocked from "@components/ContentBlocked";
+import type { CardDetails } from "@components/cards/cards";
+import { cards } from "@components/cards/cards";
+import DisplayTarotCard from "@components/cards/DisplayTarotCard";
 import DesperationChain from "@components/DesperationChain";
 import DishonestyChain from "@components/DishonestyChain";
 import StoryHolder from "@components/StoryHolder";

@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import { CardDetails } from "./cards";
+import type { CardDetails } from "./cards";
 
 export default function DisplayTarotCard({
   card,
@@ -16,13 +16,16 @@ export default function DisplayTarotCard({
     <View style={styles.container}>
       <Text style={styles.title}>
         {card.name}
-        {flipped ? ": Reversed" : ""}
+        {flipped && card.type === "majorArcana" ? ": Reversed" : ""}
       </Text>
       <View style={styles.imageContainer}>
         {card.image && (
           <Image
             source={card.image}
-            style={[styles.image, flipped && styles.flippedImage]}
+            style={[
+              styles.image,
+              (flipped && card.type === "majorArcana") && styles.flippedImage,
+            ]}
           />
         )}
       </View>
