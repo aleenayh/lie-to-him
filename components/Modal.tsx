@@ -13,6 +13,7 @@ export default function ModalComponent({
     <Modal
       animationType="slide"
       visible={visible}
+      transparent={true}
       onRequestClose={onRequestClose}
     >
       <View style={styles.background}>
@@ -29,8 +30,11 @@ export default function ModalComponent({
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "papayawhip",
     flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     height: "100%",
     width: "100%",
   },
@@ -39,6 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 20,
+    marginHorizontal: 40,
     padding: 20,
     backgroundColor: "#e7cda7",
     borderRadius: 10,
