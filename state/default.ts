@@ -24,7 +24,8 @@ export const defaultGameState = () => {
       },
     },
     tower: {
-      nextBlockPull: 0, 
+      nextBlockPull: 0,
+      collapsed: false,
     }, //TODO
     deck,
     turnCount: 0,

@@ -1,6 +1,7 @@
-import { type CardDetails, cards } from "@components/cards/cards";
-import DisplayTarotCard from "@components/cards/DisplayTarotCard";
 import ContentBlocked from "@components/ContentBlocked";
+import type { CardDetails } from "@components/cards/cards";
+import { cards } from "@components/cards/cards";
+import DisplayTarotCard from "@components/cards/DisplayTarotCard";
 import DesperationChain from "@components/DesperationChain";
 import DishonestyChain from "@components/DishonestyChain";
 import StoryHolder from "@components/StoryHolder";
@@ -90,6 +91,14 @@ export default function Game() {
   };
 
   const returnToMain = () => {
+	//check game end conditions 
+	if (Object.values(gameState.story).every((story) => story.flipped)) {
+		//game is over; todo
+		return
+	} else if (gameState.tower.collapsed) {
+		//game is over; todo
+	}
+
     updateGameState({
       ...gameState,
       turnCount: gameState.turnCount + 1,

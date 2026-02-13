@@ -300,6 +300,342 @@ export const cards: Record<string, CardDetails> = {
       { type: "desperation", adjustment: 3 },
     ],
   },
+  ace_wands: {
+    name: "Ace of Wands",
+    type: "wands",
+    value: 1,
+    image: tarotImages.wands_ace,
+  },
+  ace_cups: {
+    name: "Ace of Cups",
+    type: "cups",
+    value: 1,
+    image: tarotImages.cups_ace,
+  },
+  ace_pentacles: {
+    name: "Ace of Pentacles",
+    type: "pentacles",
+    value: 1,
+    image: tarotImages.pent_ace,
+  },
+  ace_swords: {
+    name: "Ace of Swords",
+    type: "swords",
+    value: 1,
+    image: tarotImages.swords_ace,
+  },
+  two_wands: {
+    name: "Two of Wands",
+    type: "wands",
+    value: 2,
+    image: tarotImages.wands_2,
+  },
+  two_cups: {
+    name: "Two of Cups",
+    type: "cups",
+    value: 2,
+    image: tarotImages.cups_2,
+  },
+  two_pentacles: {
+    name: "Two of Pentacles",
+    type: "pentacles",
+    value: 2,
+    image: tarotImages.pent_2,
+  },
+  two_swords: {
+    name: "Two of Swords",
+    type: "swords",
+    value: 2,
+    image: tarotImages.swords_2,
+  },
+  three_wands: {
+    name: "Three of Wands",
+    type: "wands",
+    value: 3,
+    image: tarotImages.wands_3,
+  },
+  three_cups: {
+    name: "Three of Cups",
+    type: "cups",
+    value: 3,
+    image: tarotImages.cups_3,
+  },
+  three_pentacles: {
+    name: "Three of Pentacles",
+    type: "pentacles",
+    value: 3,
+    image: tarotImages.pent_3,
+  },
+  three_swords: {
+    name: "Three of Swords",
+    type: "swords",
+    value: 3,
+    image: tarotImages.swords_3,
+  },
+  four_wands: {
+    name: "Four of Wands",
+    type: "wands",
+    value: 4,
+    image: tarotImages.wands_4,
+  },
+  four_cups: {
+    name: "Four of Cups",
+    type: "cups",
+    value: 4,
+    image: tarotImages.cups_4,
+  },
+  four_pentacles: {
+    name: "Four of Pentacles",
+    type: "pentacles",
+    value: 4,
+    image: tarotImages.pent_4,
+  },
+  four_swords: {
+    name: "Four of Swords",
+    type: "swords",
+    value: 4,
+    image: tarotImages.swords_4,
+  },
+  five_wands: {
+    name: "Five of Wands",
+    type: "wands",
+    value: 5,
+    image: tarotImages.wands_5,
+  },
+  five_cups: {
+    name: "Five of Cups",
+    type: "cups",
+    value: 5,
+    image: tarotImages.cups_5,
+  },
+  five_pentacles: {
+    name: "Five of Pentacles",
+    type: "pentacles",
+    value: 5,
+    image: tarotImages.pent_5,
+  },
+  five_swords: {
+    name: "Five of Swords",
+    type: "swords",
+    value: 5,
+    image: tarotImages.swords_5,
+  },
+  six_wands: {
+    name: "Six of Wands",
+    type: "wands",
+    value: 6,
+    image: tarotImages.wands_6,
+  },
+  six_cups: {
+    name: "Six of Cups",
+    type: "cups",
+    value: 6,
+    image: tarotImages.cups_6,
+  },
+  six_pentacles: {
+    name: "Six of Pentacles",
+    type: "pentacles",
+    value: 6,
+    image: tarotImages.pent_6,
+  },
+  six_swords: {
+    name: "Six of Swords",
+    type: "swords",
+    value: 6,
+    image: tarotImages.swords_6,
+  },
+  seven_wands: {
+    name: "Seven of Wands",
+    type: "wands",
+    value: 7,
+    image: tarotImages.wands_7,
+  },
+  seven_cups: {
+    name: "Seven of Cups",
+    type: "cups",
+    value: 7,
+    image: tarotImages.cups_7,
+  },
+  seven_pentacles: {
+    name: "Seven of Pentacles",
+    type: "pentacles",
+    value: 7,
+    image: tarotImages.pent_7,
+  },
+  seven_swords: {
+    name: "Seven of Swords",
+    type: "swords",
+    value: 7,
+    image: tarotImages.swords_7,
+  },
+  eight_wands: {
+    name: "Eight of Wands",
+    type: "wands",
+    value: 8,
+    image: tarotImages.wands_8,
+  },
+  eight_cups: {
+    name: "Eight of Cups",
+    type: "cups",
+    value: 8,
+    image: tarotImages.cups_8,
+  },
+  eight_pentacles: {
+    name: "Eight of Pentacles",
+    type: "pentacles",
+    value: 8,
+    image: tarotImages.pent_8,
+  },
+  eight_swords: {
+    name: "Eight of Swords",
+    type: "swords",
+    value: 8,
+    image: tarotImages.swords_8,
+  },
+  nine_wands: {
+    name: "Nine of Wands",
+    type: "wands",
+    value: 9,
+    image: tarotImages.wands_9,
+  },
+  nine_cups: {
+    name: "Nine of Cups",
+    type: "cups",
+    value: 9,
+    image: tarotImages.cups_9,
+  },
+  nine_pentacles: {
+    name: "Nine of Pentacles",
+    type: "pentacles",
+    value: 9,
+    image: tarotImages.pent_9,
+  },
+  nine_swords: {
+    name: "Nine of Swords",
+    type: "swords",
+    value: 9,
+    image: tarotImages.swords_9,
+  },
+  ten_wands: {
+    name: "Ten of Wands",
+    type: "wands",
+    value: 10,
+    image: tarotImages.wands_10,
+  },
+  ten_cups: {
+    name: "Ten of Cups",
+    type: "cups",
+    value: 10,
+    image: tarotImages.cups_10,
+  },
+  ten_pentacles: {
+    name: "Ten of Pentacles",
+    type: "pentacles",
+    value: 10,
+    image: tarotImages.pent_10,
+  },
+  ten_swords: {
+    name: "Ten of Swords",
+    type: "swords",
+    value: 10,
+    image: tarotImages.swords_10,
+  },
+  page_wands: {
+    name: "Page of Wands",
+    type: "wands",
+    value: 11,
+    image: tarotImages.wands_page,
+  },
+  page_cups: {
+    name: "Page of Cups",
+    type: "cups",
+    value: 11,
+    image: tarotImages.cups_page,
+  },
+  page_pentacles: {
+    name: "Page of Pentacles",
+    type: "pentacles",
+    value: 11,
+    image: tarotImages.pent_page,
+  },
+  page_swords: {
+    name: "Page of Swords",
+    type: "swords",
+    value: 11,
+    image: tarotImages.swords_page,
+  },
+  knight_wands: {
+    name: "Knight of Wands",
+    type: "wands",
+    value: 12,
+    image: tarotImages.wands_knight,
+  },
+  knight_cups: {
+    name: "Knight of Cups",
+    type: "cups",
+    value: 12,
+    image: tarotImages.cups_knight,
+  },
+  knight_pentacles: {
+    name: "Knight of Pentacles",
+    type: "pentacles",
+    value: 12,
+    image: tarotImages.pent_knight,
+  },
+  knight_swords: {
+    name: "Knight of Swords",
+    type: "swords",
+    value: 12,
+    image: tarotImages.swords_knight,
+  },
+  queen_wands: {
+    name: "Queen of Wands",
+    type: "wands",
+    value: 14,
+    image: tarotImages.wands_queen,
+  },
+  queen_cups: {
+    name: "Queen of Cups",
+    type: "cups",
+    value: 14,
+    image: tarotImages.cups_queen,
+  },
+  queen_pentacles: {
+    name: "Queen of Pentacles",
+    type: "pentacles",
+    value: 14,
+    image: tarotImages.pent_queen,
+  },
+  queen_swords: {
+    name: "Queen of Swords",
+    type: "swords",
+    value: 14,
+    image: tarotImages.swords_queen,
+  },
+  king_wands: {
+    name: "King of Wands",
+    type: "wands",
+    value: 14,
+    image: tarotImages.wands_king,
+  },
+  king_cups: {
+    name: "King of Cups",
+    type: "cups",
+    value: 14,
+    image: tarotImages.cups_king,
+  },
+  king_pentacles: {
+    name: "King of Pentacles",
+    type: "pentacles",
+    value: 14,
+    image: tarotImages.pent_king,
+  },
+  king_swords: {
+    name: "King of Swords",
+    type: "swords",
+    value: 14,
+    image: tarotImages.swords_king,
+  },
 };
 
 export const shuffleCards = () => {
@@ -310,25 +646,30 @@ export const shuffleCards = () => {
 
   const filterableCards = Object.entries(cards);
 
-  const wands = filterableCards
+  const majorArcana = filterableCards
+    .filter(([key, card]) => card.type === "majorArcana")
+    .map(([key, _]) => key);
+
+  const minorArcana = filterableCards.filter(
+    ([key, card]) => card.type !== "majorArcana",
+  );
+
+  const wands = minorArcana
     .filter(([key, card]) => card.type === "wands" && card.value !== wandValue)
     .map(([key, _]) => key);
-  const cups = filterableCards
+  const cups = minorArcana
     .filter(([key, card]) => card.type === "cups" && card.value !== cupValue)
     .map(([key, _]) => key);
-  const pentacles = filterableCards
+  const pentacles = minorArcana
     .filter(
       ([key, card]) =>
         card.type === "pentacles" && card.value !== pentacleValue,
     )
     .map(([key, _]) => key);
-  const swords = filterableCards
+  const swords = minorArcana
     .filter(
       ([key, card]) => card.type === "swords" && card.value !== swordValue,
     )
-    .map(([key, _]) => key);
-  const majorArcana = filterableCards
-    .filter(([key, card]) => card.type === "majorArcana")
     .map(([key, _]) => key);
 
   const deck = [...wands, ...cups, ...pentacles, ...swords, ...majorArcana];

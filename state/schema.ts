@@ -23,6 +23,7 @@ export const gameStateSchema = z.object({
   }),
   tower: z.object({
     nextBlockPull: z.coerce.number().catch(0), //adjustment ++ to base
+    collapsed: z.boolean().catch(false),
     //more fields to come, TODO
   }),
   deck: z.array(z.string()),
