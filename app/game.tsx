@@ -1,7 +1,7 @@
-import ContentBlocked from "@components/ContentBlocked";
 import type { CardDetails } from "@components/cards/cards";
 import { cards } from "@components/cards/cards";
 import DisplayTarotCard from "@components/cards/DisplayTarotCard";
+import ContentBlocked from "@components/ContentBlocked";
 import DesperationChain from "@components/DesperationChain";
 import DishonestyChain from "@components/DishonestyChain";
 import StoryHolder from "@components/StoryHolder";
@@ -91,13 +91,13 @@ export default function Game() {
   };
 
   const returnToMain = () => {
-	//check game end conditions 
-	if (Object.values(gameState.story).every((story) => story.flipped)) {
-		//game is over; todo
-		return
-	} else if (gameState.tower.collapsed) {
-		//game is over; todo
-	}
+    //check game end conditions
+    if (Object.values(gameState.story).every((story) => story.flipped)) {
+      //game is over; todo
+      return;
+    } else if (gameState.tower.collapsed) {
+      //game is over; todo
+    }
 
     updateGameState({
       ...gameState,
@@ -242,5 +242,10 @@ function checkIsDrawnHigher(card: CardDetails, story: GameState["story"]) {
   }
   const drawnValue = card.value;
   const storyValue = story[card.type].cardValue;
+
+  if (drawnValue === 1 && storyValue === 14) {
+    //ace acts as 15 only if your story card is a king
+    return true;
+  }
   return drawnValue > storyValue;
 }

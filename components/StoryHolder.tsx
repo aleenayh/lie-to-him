@@ -1,6 +1,5 @@
 import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
-import { Image } from "expo-image";
 import { useState } from "react";
 import {
   type ImageSourcePropType,
@@ -9,6 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
+import Animated, { FlipInEasyX, FlipOutEasyX } from "react-native-reanimated";
 import { tarotImages } from "../assets/images/tarot";
 import DescriptionOfSuit from "./cards/DescriptionOfSuit";
 import ModalComponent from "./Modal";
@@ -39,25 +39,49 @@ export default function StoryHolder() {
             style={[styles.imageContainer]}
             onPress={() => openModalForSuit("swords")}
           >
-            <Image source={images.swords} style={styles.image} />
+            <Animated.Image
+              entering={FlipInEasyX.duration(2000).delay(200)}
+              exiting={FlipOutEasyX.duration(1000).delay(120)}
+              key={`swords-${story.swords.cardValue}-${story.swords.flipped}`}
+              source={images.swords}
+              style={styles.image}
+            />
           </Pressable>
           <Pressable
             style={[styles.imageContainer]}
             onPress={() => openModalForSuit("wands")}
           >
-            <Image source={images.wands} style={styles.image} />
+            <Animated.Image
+              entering={FlipInEasyX.duration(2000).delay(600)}
+              exiting={FlipOutEasyX.duration(1000).delay(120)}
+              key={`wands-${story.wands.cardValue}-${story.wands.flipped}`}
+              source={images.wands}
+              style={styles.image}
+            />
           </Pressable>
           <Pressable
             style={[styles.imageContainer]}
             onPress={() => openModalForSuit("cups")}
           >
-            <Image source={images.cups} style={styles.image} />
+            <Animated.Image
+              entering={FlipInEasyX.duration(2000).delay(1000)}
+              exiting={FlipOutEasyX.duration(1000).delay(120)}
+              key={`cups-${story.cups.cardValue}-${story.cups.flipped}`}
+              source={images.cups}
+              style={styles.image}
+            />
           </Pressable>
           <Pressable
             style={[styles.imageContainer]}
             onPress={() => openModalForSuit("pentacles")}
           >
-            <Image source={images.pentacles} style={styles.image} />
+            <Animated.Image
+              entering={FlipInEasyX.duration(2000).delay(1400)}
+              exiting={FlipOutEasyX.duration(1000).delay(120)}
+              key={`pentacles-${story.pentacles.cardValue}-${story.pentacles.flipped}`}
+              source={images.pentacles}
+              style={styles.image}
+            />
           </Pressable>
         </View>
       </View>
@@ -65,7 +89,10 @@ export default function StoryHolder() {
         visible={modalOpen}
         onRequestClose={() => setModalOpen(false)}
       >
-        <DescriptionOfSuit suit={modalDescriptionSuit} image={images[modalDescriptionSuit]} />
+        <DescriptionOfSuit
+          suit={modalDescriptionSuit}
+          image={images[modalDescriptionSuit]}
+        />
       </ModalComponent>
     </View>
   );
