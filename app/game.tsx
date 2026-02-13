@@ -91,6 +91,14 @@ export default function Game() {
   };
 
   const returnToMain = () => {
+	//check game end conditions 
+	if (Object.values(gameState.story).every((story) => story.flipped)) {
+		//game is over; todo
+		return
+	} else if (gameState.tower.collapsed) {
+		//game is over; todo
+	}
+
     updateGameState({
       ...gameState,
       turnCount: gameState.turnCount + 1,
