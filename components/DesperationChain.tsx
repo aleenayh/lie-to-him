@@ -25,7 +25,7 @@ export default function DesperationChain() {
             <Animated.View
               entering={RotateInUpRight.duration(1000)}
               exiting={RotateOutDownRight.duration(1000)}
-              key={`chain-item-${
+              key={`desperation-chain-item-${
                 // biome-ignore lint/suspicious/noArrayIndexKey: visual only
                 index
               }`}
@@ -33,7 +33,13 @@ export default function DesperationChain() {
               <View style={chainStyles.chainItemFilled} />
             </Animated.View>
           ) : (
-            <View style={chainStyles.chainItemPlaceholder} />
+            <View
+              style={chainStyles.chainItemPlaceholder}
+              key={`desperation-chain-item-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: visual only
+                index
+              }`}
+            />
           );
         })}
       </View>

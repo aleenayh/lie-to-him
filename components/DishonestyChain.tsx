@@ -20,7 +20,7 @@ export default function DishonestyChain() {
             <Animated.View
               entering={RotateInUpLeft.duration(1000)}
               exiting={RotateOutDownLeft.duration(1000)}
-              key={`chain-item-${
+              key={`dishonesty-chain-item-${
                 // biome-ignore lint/suspicious/noArrayIndexKey: visual only
                 index
               }`}
@@ -28,7 +28,13 @@ export default function DishonestyChain() {
               <View style={chainStyles.chainItemFilled} />
             </Animated.View>
           ) : (
-            <View style={chainStyles.chainItemPlaceholder} />
+            <View
+              style={chainStyles.chainItemPlaceholder}
+              key={`dishonesty-chain-item-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: visual only
+                index
+              }`}
+            />
           );
         })}
       </View>
