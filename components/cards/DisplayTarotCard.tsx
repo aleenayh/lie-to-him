@@ -1,22 +1,26 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import type { CardDetails } from "./cards";
 
-export default function DisplayTarotCard({
-  card,
-  flipped,
-  drawnIsHigher,
-}: {
+type CardDetailInputs = {
   card: CardDetails;
-  flipped: boolean;
+  reversed: boolean;
   drawnIsHigher: boolean;
+  difference: number;
+}
+
+export default function DisplayTarotCard({
+ inputs
+}: {
+  inputs: CardDetailInputs;
 }) {
-  const description = getDescription(card, flipped, drawnIsHigher);
+  const { card, reversed, drawnIsHigher, difference } = inputs;
+  const description = getDescription(card, reversed, drawnIsHigher);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
         {card.name}
-        {flipped && card.type === "majorArcana" ? ": Reversed" : ""}
+        {reversed && card.type === "majorArcana" ? ": Reversed" : ""}
       </Text>
       <View style={styles.imageContainer}>
         {card.image && (
@@ -24,7 +28,7 @@ export default function DisplayTarotCard({
             source={card.image}
             style={[
               styles.image,
-              (flipped && card.type === "majorArcana") && styles.flippedImage,
+              (reversed && card.type === "majorArcana") && styles.reversedImage,
             ]}
           />
         )}
@@ -33,7 +37,7 @@ export default function DisplayTarotCard({
 
       {drawnIsHigher && (
         <Text style={styles.description}>
-          (This will flip your story card for {card.type}.)
+          (This will flip your story card for {card.type} and {getEffect(difference)})
         </Text>
       )}
     </View>
@@ -81,18 +85,18 @@ const styles = StyleSheet.create({
     zIndex: -1,
     inset: 0,
   },
-  flippedImage: {
+  reversedImage: {
     transform: [{ rotate: "180deg" }],
   },
 });
 
 function getDescription(
   card: CardDetails,
-  flipped: boolean,
+  reversed: boolean,
   drawnIsHigher: boolean,
 ) {
   if (card.type === "majorArcana") {
-    return flipped ? card.descriptionReversed : card.descriptionUpright;
+    return reversed ? card.descriptionReversed : card.descriptionUpright;
   }
   switch (card.type) {
     case "wands":
@@ -112,4 +116,20 @@ function getDescription(
         ? "Intimidate him with your certainty. He doubts you when his anger rears its head in response."
         : "Intimidate him with your certainty. He believes you when the force of your argument beats his doubts away.";
   }
+}
+
+function getEffect(difference: number) {
+  if (difference <= 3) {
+    return "increase desperation by 1."
+  } 
+  if (difference <= 6) {
+    return "increase dishonesty by 1."
+  }
+  if (difference <= 9) {
+    return "increase desperation by 2, pull 2 blocks."
+  }
+  if (difference <= 12) {
+    return "increase dishonesty by 2, pull 2 blocks."
+  }
+  return "have no additional effect.";
 }
