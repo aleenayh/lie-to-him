@@ -4,6 +4,7 @@ import DisplayTarotCard from "@components/cards/DisplayTarotCard";
 import ContentBlocked from "@components/ContentBlocked";
 import DesperationChain from "@components/DesperationChain";
 import DishonestyChain from "@components/DishonestyChain";
+import Journal from "@components/Journal";
 import StoryHolder from "@components/StoryHolder";
 import Tower from "@components/tower/Tower";
 import { useGame } from "@state/Context";
@@ -11,10 +12,14 @@ import type { GameState } from "@state/schema";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import Swipeable, {
+	SwipeDirection,
+} from "react-native-gesture-handler/ReanimatedSwipeable";
 import ModalComponent from "../components/Modal";
 
 export default function Game() {
   const { gameState, updateGameState, contentUnlocked } = useGame();
+  const [view, setView] = useState<"game" | "journal">("game");
   const [cardVisible, setCardVisible] = useState(false);
   const [towerVisible, setTowerVisible] = useState(false);
   const [cardDetails, setCardDetails] = useState<{
@@ -148,6 +153,23 @@ export default function Game() {
     setTowerVisible(false);
   };
 
+  const handleSwipe = (direction: SwipeDirection) => {
+    switch (direction) {
+      case SwipeDirection.RIGHT:
+        if (view === "game") {
+          router.push("/");
+        } else if (view === "journal") {
+          setView("game");
+        }
+        break;
+      case SwipeDirection.LEFT:
+        if (view === "game") {
+          setView("journal");
+        }
+        break;
+    }
+  };
+
   useEffect(() => {
     if (!contentUnlocked && gameState.turnCount >= 5) {
       setShowBlocked(true);
@@ -155,53 +177,80 @@ export default function Game() {
   }, [contentUnlocked, gameState.turnCount]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.column}>
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <Text style={styles.backButtonText}>←</Text>
-        </Pressable>
-        <Text style={styles.header}>Lie To Him</Text>
-        <Text style={styles.text}>Turn {gameState.turnCount}</Text>
-        <View style={styles.gameGrid}>
-          <DesperationChain />
-          <View
-            style={{
-              flex: 1,
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-            }}
-          >
-            <Pressable onPress={triggerDrawCard}>
-              <Text style={styles.button}>Draw</Text>
-            </Pressable>
+    <>
+      {view === "game" && (
+        <Swipeable
+          onSwipeableOpen={handleSwipe}
+          renderLeftActions={() => (
+            <View style={[styles.swipePreview, styles.swipePreviewLeft]}>
+              <Text
+                style={[styles.swipePreviewText, styles.swipePreviewTextLeft]}
+              >
+                Back
+              </Text>
+            </View>
+          )}
+          renderRightActions={() => (
+            <View style={[styles.swipePreview, styles.swipePreviewRight]}>
+              <Text
+                style={[styles.swipePreviewText, styles.swipePreviewTextRight]}
+              >
+                Journal
+              </Text>
+            </View>
+          )}
+          leftThreshold={100}
+          rightThreshold={100}
+        >
+          <View style={styles.container}>
+            <View style={styles.column}>
+              <Text style={styles.header}>Lie To Him</Text>
+              <Text style={styles.text}>Turn {gameState.turnCount}</Text>
+              <View style={styles.gameGrid}>
+                <DesperationChain />
+                <View
+                  style={{
+                    flex: 1,
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 10,
+                  }}
+                >
+                  <Pressable onPress={triggerDrawCard}>
+                    <Text style={styles.button}>Draw</Text>
+                  </Pressable>
+                </View>
+                <DishonestyChain />
+              </View>
+              <StoryHolder />
+            </View>
+            <ModalComponent visible={cardVisible} onRequestClose={showTower}>
+              {cardDetails ? (
+                <DisplayTarotCard inputs={cardDetails} />
+              ) : (
+                <Text>Uh oh! We couldn't find that card.</Text>
+              )}
+            </ModalComponent>
+            <ModalComponent
+              visible={towerVisible}
+              onRequestClose={checkGameOverAndRoute}
+            >
+              <Tower />
+            </ModalComponent>
+            <ModalComponent
+              visible={showBlocked}
+              onRequestClose={() => router.push("/unlock")}
+            >
+              <ContentBlocked />
+            </ModalComponent>
           </View>
-          <DishonestyChain />
-        </View>
-        <StoryHolder />
-      </View>
-      <ModalComponent visible={cardVisible} onRequestClose={showTower}>
-        {cardDetails ? (
-          <DisplayTarotCard inputs={cardDetails} />
-        ) : (
-          <Text>Uh oh! We couldn't find that card.</Text>
-        )}
-      </ModalComponent>
-      <ModalComponent
-        visible={towerVisible}
-        onRequestClose={checkGameOverAndRoute}
-      >
-        <Tower />
-      </ModalComponent>
-      <ModalComponent
-        visible={showBlocked}
-        onRequestClose={() => router.push("/unlock")}
-      >
-        <ContentBlocked />
-      </ModalComponent>
-    </View>
+        </Swipeable>
+      )}
+
+      {view === "journal" && <Journal onSwipeAway={() => setView("game")} />}
+    </>
   );
 }
 
@@ -265,6 +314,31 @@ const styles = StyleSheet.create({
     color: "#9a5341",
     fontFamily: "rocker",
     fontSize: 40,
+  },
+  swipePreview: {
+    backgroundColor: "#9a5341",
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    padding: 10,
+    margin: 10,
+  },
+  swipePreviewLeft: {
+    alignItems: "flex-start",
+  },
+  swipePreviewRight: {
+    alignItems: "flex-end",
+  },
+  swipePreviewText: {
+    color: "#e7cda7",
+    fontFamily: "typewriter",
+    fontSize: 24,
+  },
+  swipePreviewTextLeft: {
+    transform: [{ rotate: "-90deg" }],
+  },
+  swipePreviewTextRight: {
+    transform: [{ rotate: "90deg" }],
   },
 });
 

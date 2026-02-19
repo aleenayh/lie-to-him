@@ -35,6 +35,7 @@ export const gameStateSchema = z
       .enum(["storyOver", "towerCollapsed"])
       .nullable()
       .catch(null),
+    journal: z.string().optional().catch(""),
   })
   .catch(defaultGameState());
 
