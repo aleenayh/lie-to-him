@@ -29,5 +29,7 @@ export const defaultGameState = () => {
     }, //TODO
     deck,
     turnCount: 0,
+    gameOver: false,
+    gameOverReason: null,
   };
 };
