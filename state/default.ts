@@ -31,5 +31,6 @@ export const defaultGameState = () => {
     turnCount: 0,
     gameOver: false,
     gameOverReason: null,
+    journal: "",
   };
 };

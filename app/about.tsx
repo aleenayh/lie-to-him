@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 const skeletonImage = require("../assets/images/skeleton.svg");
 
-export default function Unlock() {
+export default function About() {
   return (
     <View style={styles.container}>
       <Image source={skeletonImage} style={styles.backgroundImage} />
