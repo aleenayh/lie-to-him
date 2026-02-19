@@ -86,36 +86,37 @@ export default function Game() {
     } else {
       if (card.type === "majorArcana") {
         const effects = reversed ? card.effectReversed : card.effectUpright;
+        let nextBlockPullAdjustment = 0;
+        let desperationAdjustment = 0;
+        let dishonestyAdjustment = 0;
         effects.forEach((effect) => {
           if (effect.type === "nextBlockPull") {
-            updateGameState({
-              ...gameState,
-              tower: {
-                ...gameState.tower,
-                nextBlockPull:
-                  gameState.tower.nextBlockPull + effect.adjustment,
-              },
-            });
+            nextBlockPullAdjustment = effect.adjustment;
           } else if (effect.type === "desperation") {
-            updateGameState({
-              ...gameState,
-              desperation: Math.max(
-                0,
-                gameState.desperation + effect.adjustment,
-              ),
-            });
+            desperationAdjustment = effect.adjustment;
           } else if (effect.type === "dishonesty") {
-            updateGameState({
-              ...gameState,
-              dishonesty: Math.max(0, gameState.dishonesty + effect.adjustment),
-            });
+            dishonestyAdjustment = effect.adjustment;
           }
         });
+        updateGameState({
+          ...gameState,
+          deck: newDeck,
+          desperation: Math.max(
+            0,
+            gameState.desperation + desperationAdjustment,
+          ),
+          dishonesty: Math.max(0, gameState.dishonesty + dishonestyAdjustment),
+          tower: {
+            ...gameState.tower,
+            nextBlockPull: nextBlockPullAdjustment,
+          },
+        });
+      } else {
+        updateGameState({
+          ...gameState,
+          deck: newDeck,
+        });
       }
-      updateGameState({
-        ...gameState,
-        deck: newDeck,
-      });
     }
   };
 
