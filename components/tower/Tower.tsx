@@ -2,6 +2,7 @@ import { useGame } from "@state/Context";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { TowerRow } from "./TowerRow";
 
 export default function Tower() {
   const { gameState } = useGame();
@@ -21,6 +22,16 @@ export default function Tower() {
         <Text style={styles.text}>
           Pull {remainingBlockPulls} blocks from your tower
         </Text>
+
+        {Array.from({ length: 10 }).map((_, index) => (
+          <TowerRow
+            key={`tower-row-${
+              // biome-ignore lint/suspicious/noArrayIndexKey: yolo
+              index
+            }`}
+            rowIndex={index}
+          />
+        ))}
         <Pressable
           onPress={handleBlockMove}
           style={[styles.button, remainingBlockPulls <= 0 && styles.disabled]}
