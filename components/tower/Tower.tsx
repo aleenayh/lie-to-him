@@ -1,7 +1,9 @@
+import { Canvas } from "@react-three/fiber";
 import { useGame } from "@state/Context";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { TowerRow } from "./TowerRow";
 
 export default function Tower() {
   const { gameState } = useGame();
@@ -21,6 +23,34 @@ export default function Tower() {
         <Text style={styles.text}>
           Pull {remainingBlockPulls} blocks from your tower
         </Text>
+        <Canvas
+          style={{ height: 100, width: 200 }}
+          fallback={<Text>Error rendering tower!</Text>}
+        >
+          <ambientLight intensity={Math.PI / 2} />
+          <spotLight
+            position={[10, 10, 10]}
+            angle={0.15}
+            penumbra={1}
+            decay={0}
+            intensity={Math.PI}
+          />
+          <pointLight
+            position={[-10, -10, -10]}
+            decay={0}
+            intensity={Math.PI}
+          />
+          {Array.from({ length: 18 }).map((_, index) => (
+            <TowerRow
+              key={`tower-row-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: yolo
+                index
+              }`}
+              rowIndex={index}
+            />
+          ))}
+        </Canvas>
+
         <Pressable
           onPress={handleBlockMove}
           style={[styles.button, remainingBlockPulls <= 0 && styles.disabled]}
