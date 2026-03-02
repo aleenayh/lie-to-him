@@ -1,172 +1,67 @@
-import { StyleSheet, View } from "react-native";
+import type { ThreeElements } from "@react-three/fiber";
+import { useRef, useState } from "react";
+import type * as THREE from "three";
 
 export function TowerRow({ rowIndex }: { rowIndex: number }) {
   const faceLeft = rowIndex % 2 === 0;
-
-  const pos = ["farthestRight", "middle", "farthestLeft"] as const;
+  const OFFSET_Y = 2.2;
 
   if (faceLeft) {
     return (
-      <View style={styles.row}>
-        {Array.from({ length: 3 }).map((_, blockIndex) => (
-          <LeftFacingBlock
-            key={`${rowIndex}-left-facing-block-${
-              // biome-ignore lint/suspicious/noArrayIndexKey: visual only
-              blockIndex
-            }`}
-            pos={pos[blockIndex] as (typeof pos)[number]}
-          />
-        ))}
-        <LongSideTowerLeft />
-      </View>
+      <group position={[-0.6, 0.32 * rowIndex - OFFSET_Y, -0.9]}>
+        {Array.from({ length: 3 }).map((_, blockIndex) => {
+          return (
+            <Block
+              key={`block-${rowIndex}-${blockIndex}`}
+              props={{
+                position: [
+                  0.4 * blockIndex,
+                  -0.18 * blockIndex,
+                  0.45 * blockIndex,
+                ],
+                rotation: [0.34, -0.9, 0],
+              }}
+              color={blockIndex === 1 ? "#b8634d" : "#9a5341"}
+            />
+          );
+        })}
+      </group>
     );
   } else {
     return (
-      <View style={styles.row}>
-        <LongSideTowerRight />
+      <group position={[-0.6, 0.32 * rowIndex - OFFSET_Y - 0.3, -0.1]}>
         {Array.from({ length: 3 }).map((_, blockIndex) => (
-          <RightFacingBlock
-            key={`${rowIndex}-right-facing-block-${
-              // biome-ignore lint/suspicious/noArrayIndexKey: visual only
-              blockIndex
-            }`}
-            pos={pos[blockIndex]}
+          <Block
+            key={`block-${rowIndex}-${blockIndex}`}
+            props={{
+              position: [
+                0.48 * blockIndex,
+                0.14 * blockIndex,
+                -0.34 * blockIndex,
+              ],
+              rotation: [0.34, 0.7, 0],
+            }}
+            color={blockIndex === 1 ? "#a1523f" : "#c76a52"}
           />
         ))}
-      </View>
+      </group>
     );
   }
 }
 
-function LongSideTowerRight() {
-  return (
-    <View
-      style={[
-        styles.block,
-        styles.longSide,
-        styles.leftFacing,
-        styles.longRightPosition,
-      ]}
-    />
-  );
-}
-
-function LongSideTowerLeft() {
-  return (
-    <View
-      style={[
-        styles.block,
-        styles.longSide,
-        styles.rightFacing,
-        styles.longLeftPosition,
-      ]}
-    />
-  );
-}
-
-function LeftFacingBlock({
-  pos,
+export function Block({
+  props,
+  color,
 }: {
-  pos: "farthestRight" | "middle" | "farthestLeft";
+  props: ThreeElements["mesh"];
+  color?: string;
 }) {
+  const ref = useRef<THREE.Mesh>(null);
+  const [isTapped, setIsTapped] = useState(false);
   return (
-    <View
-      style={[
-        styles.block,
-        styles.shortSide,
-        styles.leftFacing,
-        pos === "farthestRight" && styles.centerLeftBlock,
-        pos === "middle" && styles.middleLeftBlock,
-        pos === "farthestLeft" && styles.farthestLeftBlock,
-      ]}
-    />
+    <mesh {...props} ref={ref} onClick={() => setIsTapped(!isTapped)}>
+      <boxGeometry args={[0.65, 0.4, 1.7]} />
+      <meshStandardMaterial color={color ?? "#9a5341"} />
+    </mesh>
   );
 }
-
-function RightFacingBlock({
-  pos,
-}: {
-  pos: "farthestRight" | "middle" | "farthestLeft";
-}) {
-  return (
-    <View
-      style={[
-        styles.block,
-        styles.shortSide,
-        styles.rightFacing,
-        pos === "farthestRight" && styles.farthestRightBlock,
-        pos === "middle" && styles.middleRightBlock,
-        pos === "farthestLeft" && styles.centerRightBlock,
-      ]}
-      />
-  );
-}
-
-const styles = StyleSheet.create({
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "flex-end",
-    overflow: "visible",
-    minHeight: 18,
-  },
-  block: {
-    position: "absolute",
-    backgroundColor: "#e7cda7",
-    borderColor: "#9a5341",
-    borderWidth: 1,
-    height: 20,
-  },
-  longSide: {
-    width: 60,
-    bottom: 0,
-    zIndex: -1,
-    transform: [{ perspective: 1000 }],
-  },
-  longRightPosition: {
-    right: 0,
-  },
-  longLeftPosition: {
-    right: -60,
-  },
-  shortSide: {
-    width: 20,
-  },
-  leftFacing: {
-    transform: [{ rotate: "8deg" }, { perspective: 1 }],
-  },
-  rightFacing: {
-    transform: [{ rotate: "-8deg" }, { perspective: 1000 }],
-  },
-  farthestRightBlock: {
-    right: -60,
-    bottom: 0,
-    backgroundColor: "yellow", //todo remove
-  },
-  middleRightBlock: {
-    right: -40,
-    bottom: -2,
-    backgroundColor: "orange", //todo remove
-  },
-  centerRightBlock: {
-    right: -20,
-    bottom: -5,
-    backgroundColor: "purple", //todo remove
-  },
-  centerLeftBlock: {
-    right: 0,
-    bottom: -5,
-    backgroundColor: "pink", //todo remove
-  },
-  middleLeftBlock: {
-    right: 20,
-    bottom: -2,
-    backgroundColor: "brown", //todo remove
-  },
-  farthestLeftBlock: {
-    right: 40,
-    bottom: 0,
-    backgroundColor: "cyan", //todo remove
-  },
-});
