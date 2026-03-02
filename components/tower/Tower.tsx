@@ -1,8 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import { useGame } from "@state/Context";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { StyleSheet, Text, View } from "react-native";
 import { TowerRow } from "./TowerRow";
 
 export default function Tower() {
@@ -11,55 +10,59 @@ export default function Tower() {
   const [remainingBlockPulls, setRemainingBlockPulls] = useState(
     tower.nextBlockPull + dishonesty,
   );
+  const [tappedRow, setTappedRow] = useState<number | null>(null);
+  const [tappedBlock, setTappedBlock] = useState<number | null>(null);
 
-  const handleBlockMove = () => {
+  const handleBlockTap = (rowIndex: number, blockIndex: number) => {
+    setTappedRow(rowIndex);
+    setTappedBlock(blockIndex);
+  };
+
+  const handleBlockMove = (
+    rowIndex: number,
+    blockIndex: number,
+    velocity: number,
+  ) => {
     setRemainingBlockPulls((prev) => prev - 1);
     //TODO
+    //console.log("pulled: ", rowIndex, blockIndex, "at speed: ", velocity);
+    setTappedBlock(null);
+    setTappedRow(null);
   };
 
   return (
-    <GestureHandlerRootView>
-      <View style={styles.page}>
-        <Text style={styles.text}>
-          Pull {remainingBlockPulls} blocks from your tower
-        </Text>
-        <Canvas
-          style={{ height: 100, width: 200 }}
-          fallback={<Text>Error rendering tower!</Text>}
-        >
-          <ambientLight intensity={Math.PI / 2} />
-          <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            decay={0}
-            intensity={Math.PI}
+    <View style={styles.page}>
+      <Text style={styles.text}>
+        Pull {remainingBlockPulls} blocks from your tower
+      </Text>
+      <Canvas
+        style={{ height: 100, width: 200 }}
+        fallback={<Text>Error rendering tower!</Text>}
+      >
+        <ambientLight intensity={Math.PI / 2} />
+        <spotLight
+          position={[10, 10, 10]}
+          angle={0.15}
+          penumbra={1}
+          decay={0}
+          intensity={Math.PI}
+        />
+        <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
+        {Array.from({ length: 18 }).map((_, index) => (
+          <TowerRow
+            key={`tower-row-${
+              // biome-ignore lint/suspicious/noArrayIndexKey: yolo
+              index
+            }`}
+            rowIndex={index}
+            handleBlockMove={handleBlockMove}
+            tappedRow={tappedRow}
+            tappedBlock={tappedBlock}
+            handleBlockTap={handleBlockTap}
           />
-          <pointLight
-            position={[-10, -10, -10]}
-            decay={0}
-            intensity={Math.PI}
-          />
-          {Array.from({ length: 18 }).map((_, index) => (
-            <TowerRow
-              key={`tower-row-${
-                // biome-ignore lint/suspicious/noArrayIndexKey: yolo
-                index
-              }`}
-              rowIndex={index}
-            />
-          ))}
-        </Canvas>
-
-        <Pressable
-          onPress={handleBlockMove}
-          style={[styles.button, remainingBlockPulls <= 0 && styles.disabled]}
-          disabled={remainingBlockPulls <= 0}
-        >
-          <Text style={styles.text}>Pull Block</Text>
-        </Pressable>
-      </View>
-    </GestureHandlerRootView>
+        ))}
+      </Canvas>
+    </View>
   );
 }
 
