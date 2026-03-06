@@ -19,7 +19,7 @@ export default function About() {
         </View>
         <View style={styles.columnStack}>
           <Text style={styles.credit}>
-            Zine Cover Design [and spot illustrations] by Jen Vaughn
+            Zine Cover Design and Spot Illustrations by Jen Vaughn
           </Text>
           <Link href="https://artstation.com/thejenya">
             <Text style={styles.linkText}>artstation.com/thejenya</Text>
@@ -32,7 +32,7 @@ export default function About() {
           </Link>
         </View>
         <View style={styles.columnStack}>
-          <Text style={styles.credit}>Companion App by Aleena Yunuba</Text>
+          <Text style={styles.credit}>Mobile App by Aleena Yunuba</Text>
           <Link href="https://github.com/aleenayh">
             <Text style={styles.linkText}>github.com/aleenayh</Text>
           </Link>

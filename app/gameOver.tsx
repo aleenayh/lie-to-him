@@ -1,42 +1,54 @@
+import { JournalInterior } from "@components/Journal";
 import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
 import { Image } from "expo-image";
 import { router } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Keyboard, Pressable, StyleSheet, Text, View } from "react-native";
 
 const skeletonImage = require("../assets/images/skeleton.svg");
 
 export default function GameOver() {
-  const { gameState: { gameOverReason, desperation } } = useGame();
+  const {
+    gameState: { gameOverReason, desperation },
+  } = useGame();
 
   const gameOverMessage = getGameOverMessage(gameOverReason, desperation);
 
   //TODO: provide a way to save story
 
   return (
-    <View style={styles.container}>
+    <Pressable onPress={() => Keyboard.dismiss()} style={styles.outerContainer}>
       <Image source={skeletonImage} style={styles.backgroundImage} />
       <Image source={skeletonImage} style={styles.backgroundImageReversed} />
-      <Text style={styles.header}>Game Over</Text>
-      <View style={styles.interior}>
+      <View style={styles.container}>
+        <Text style={styles.header}>Game Over</Text>
         <Text style={styles.text}>{gameOverMessage}</Text>
+        <JournalInterior variant="brown" hideIfEmpty/>
+        <Pressable onPress={() => router.push("/")}>
+          <Text style={styles.button}>Return to Main Menu</Text>
+        </Pressable>
       </View>
-      <Pressable onPress={() => router.push("/")}>
-        <Text style={styles.button}>Return to Main Menu</Text>
-      </Pressable>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  outerContainer: {
     backgroundColor: "papayawhip",
     flex: 1,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "stretch",
     padding: 16,
+  },
+  container: {
+    backgroundColor: "rgba(255, 239, 213, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
   },
   backgroundImage: {
     position: "absolute",
@@ -62,8 +74,6 @@ const styles = StyleSheet.create({
     fontSize: 64,
   },
   interior: {
-    backgroundColor: "rgba(255, 239, 213, 0.5)",
-    maxHeight: "70%",
     overflowY: "auto",
     width: "100%",
     justifyContent: "center",
@@ -90,15 +100,17 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#9a5341",
-    fontSize: 12,
+    fontSize: 18,
     padding: 8,
     textAlign: "left",
     fontFamily: "typewriter",
   },
 });
 
-
-function getGameOverMessage(gameOverReason: GameState["gameOverReason"], desperation: number) {
+function getGameOverMessage(
+  gameOverReason: GameState["gameOverReason"],
+  desperation: number,
+) {
   if (gameOverReason === "storyOver") {
     if (desperation === 0) {
       return "You have woven a tapestry of lies. And he believes you.";
@@ -108,7 +120,7 @@ function getGameOverMessage(gameOverReason: GameState["gameOverReason"], despera
       return "You have told a story. And he has listened to it.";
     } else {
       return "You have stumbled through a conversation. And he has heard enough.";
-    } 
+    }
   } else {
     if (desperation === 0) {
       return "You have nothing left to say. And he has nothing left to hear.";

@@ -32,7 +32,10 @@ export default function Index() {
   }
 
   const restartAndReroute = () => {
-    updateGameState(defaultGameState());
+    updateGameState({
+      ...defaultGameState(),
+      turnCount: 1,
+    });
     router.push("/game");
   };
 
