@@ -36,7 +36,7 @@ export default function Index() {
     router.push("/game");
   };
 
-  const existingGame = gameState.turnCount > 0;
+  const existingGame = gameState.turnCount > 0 && !gameState.gameOver;
 
   return (
     <View style={styles.container}>

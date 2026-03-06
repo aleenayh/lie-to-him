@@ -1,5 +1,9 @@
 import { shuffleCards } from "@components/cards/cards";
 
+const defaultRows = Array.from({ length: 18 }, () =>
+  Array.from({ length: 3 }, () => true),
+);
+
 export const defaultGameState = () => {
   const { wands, cups, pentacles, swords, deck } = shuffleCards();
   return {
@@ -26,7 +30,8 @@ export const defaultGameState = () => {
     tower: {
       nextBlockPull: 0,
       collapsed: false,
-    }, //TODO
+      rows: defaultRows,
+    },
     deck,
     turnCount: 0,
     gameOver: false,
