@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import type { CardDetails } from "./cards";
 
 type CardDetailInputs = {
@@ -6,10 +7,10 @@ type CardDetailInputs = {
   reversed: boolean;
   drawnIsHigher: boolean;
   difference: number;
-}
+};
 
 export default function DisplayTarotCard({
- inputs
+  inputs,
 }: {
   inputs: CardDetailInputs;
 }) {
@@ -18,28 +19,39 @@ export default function DisplayTarotCard({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {card.name}
-        {reversed && card.type === "majorArcana" ? ": Reversed" : ""}
-      </Text>
-      <View style={styles.imageContainer}>
-        {card.image && (
-          <Image
-            source={card.image}
-            style={[
-              styles.image,
-              (reversed && card.type === "majorArcana") && styles.reversedImage,
-            ]}
-          />
-        )}
+      <View style={styles.cover}>
+        <Text style={styles.coverText}>Lie to Him</Text>
       </View>
-      <Text style={styles.description}>{description}</Text>
-
-      {drawnIsHigher && (
-        <Text style={styles.description}>
-          (This will flip your story card for {card.type} and {getEffect(difference)})
+      <Animated.View
+        key={card.name}
+        style={styles.container}
+        entering={FadeIn.duration(5000)}
+        exiting={FadeOut}
+      >
+        <Text style={styles.title}>
+          {card.name}
+          {reversed && card.type === "majorArcana" ? ": Reversed" : ""}
         </Text>
-      )}
+        <View style={styles.imageContainer}>
+          {card.image && (
+            <Image
+              source={card.image}
+              style={[
+                styles.image,
+                reversed && card.type === "majorArcana" && styles.reversedImage,
+              ]}
+            />
+          )}
+        </View>
+        <Text style={styles.description}>{description}</Text>
+
+        {drawnIsHigher && (
+          <Text style={styles.description}>
+            (This will flip your story card for {card.type} and{" "}
+            {getEffect(difference)})
+          </Text>
+        )}
+      </Animated.View>
     </View>
   );
 }
@@ -52,6 +64,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "90%",
+  },
+  cover: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    height: "100%",
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#e7cda7",
+  },
+  coverText: {
+    fontSize: 120,
+    textAlign: "center",
+    color: "#9a5341",
+    fontFamily: "typewriter",
   },
   title: {
     fontSize: 24,
@@ -81,7 +110,7 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "center",
-    opacity: 0.8,
+    opacity: 1,
     zIndex: -1,
     inset: 0,
   },
@@ -120,16 +149,16 @@ function getDescription(
 
 function getEffect(difference: number) {
   if (difference <= 3) {
-    return "increase desperation by 1."
-  } 
+    return "increase desperation by 1.";
+  }
   if (difference <= 6) {
-    return "increase dishonesty by 1."
+    return "increase dishonesty by 1.";
   }
   if (difference <= 9) {
-    return "increase desperation by 2, pull 2 blocks."
+    return "increase desperation by 2, pull 2 blocks.";
   }
   if (difference <= 12) {
-    return "increase dishonesty by 2, pull 2 blocks."
+    return "increase dishonesty by 2, pull 2 blocks.";
   }
   return "have no additional effect.";
 }
