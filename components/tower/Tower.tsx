@@ -5,14 +5,22 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TowerRow } from "./TowerRow";
 
-export default function Tower({setContinueButtonEnabled}: {setContinueButtonEnabled: (enabled: boolean) => void}) {
+export default function Tower({
+  setContinueButtonEnabled,
+}: {
+  setContinueButtonEnabled: (enabled: boolean) => void;
+}) {
   const { gameState, updateGameState } = useGame();
   const { tower, dishonesty } = gameState;
   const [remainingBlockPulls, setRemainingBlockPulls] = useState(
     tower.nextBlockPull + dishonesty,
   );
   useEffect(() => {
-    setContinueButtonEnabled(remainingBlockPulls > 0);
+    if (remainingBlockPulls <= 0) {
+      setContinueButtonEnabled(true);
+    } else {
+      setContinueButtonEnabled(false);
+    }
   }, [remainingBlockPulls, setContinueButtonEnabled]);
 
   const [tappedRow, setTappedRow] = useState<number | null>(null);
@@ -36,6 +44,7 @@ export default function Tower({setContinueButtonEnabled}: {setContinueButtonEnab
     } else {
       if (isUnstable(tower, rowIndex, blockIndex)) {
         shouldCollapse = true;
+        setContinueButtonEnabled(true);
       }
     }
     if (shouldCollapse) {
@@ -139,8 +148,7 @@ function isUnstable(
   rowIndex: number,
   blockIndex: number,
 ): boolean {
-  const collapseThreshold = 1;
-  console.log("checkStability", rowIndex, blockIndex);
+  const collapseThreshold = 0.6;
   const rowAbove = tower.rows[rowIndex + 1];
   const rowBelow = tower.rows[rowIndex - 1];
   const thisRow = tower.rows[rowIndex];
@@ -152,19 +160,16 @@ function isUnstable(
   if (remainingBlocksInRow <= 0) return true;
 
   //determine if tower leans left or right more
-
-  const leftBlocks = tower.rows.reduce((acc, row, index) => {
-    if (index === 2) {
-      return acc + row.filter(Boolean).length;
-    }
-    return acc;
-  }, 0);
-  const rightBlocks = tower.rows.reduce((acc, row, index) => {
-    if (index === 2) {
-      return acc + row.filter(Boolean).length;
-    }
-    return acc;
-  }, 0);
+  let leftBlocks = 0;
+  let rightBlocks = 0;
+  for (let i = 0; i < tower.rows.length; i++) {
+    leftBlocks += tower.rows[i].filter(
+      (block, index) => index === 0 && block,
+    ).length;
+    rightBlocks += tower.rows[i].filter(
+      (block, index) => index === 2 && block,
+    ).length;
+  }
   const towerLeanAmount = Math.abs(leftBlocks - rightBlocks);
   const leansMyWay =
     blockIndex === 0
@@ -172,18 +177,11 @@ function isUnstable(
       : blockIndex === 2
         ? leftBlocks > rightBlocks
         : false;
-
-  if (towerLeanAmount > 3 && !leansMyWay) return true;
+  //TODO some kind of visual clue here
+  if (towerLeanAmount > 3 && leansMyWay) return true;
 
   //bottom rows effect the stability of the tower more than upper rows
   const stabilityOfRowCoefficient = 1.26 - 0.09 * rowIndex;
-
-  let stabilityOfBlockCoefficient = 0.5;
-  if (remainingBlocksInRow === 1) {
-    stabilityOfBlockCoefficient = blockIndex === 1 ? 0.8 : 0.3;
-  } else {
-    stabilityOfBlockCoefficient = blockIndex === 1 ? 0.5 : 0.7;
-  }
 
   //more surrounding blocks = more stable
   const surroundingBlocks =
@@ -192,15 +190,20 @@ function isUnstable(
       ...(rowIndex === 0 ? [] : rowBelow),
     ].filter(Boolean).length + remainingBlocksInRow;
   const surroundTotal = rowIndex === 17 || rowIndex === 0 ? 5 : 8;
+  console.log(
+    "surroundTotal",
+    surroundTotal,
+    "surroundingBlocks",
+    surroundingBlocks,
+  );
   const stabilitySurroundingCoeffienct =
     (surroundTotal - surroundingBlocks) / surroundTotal;
 
-  const stability =
-    stabilityOfRowCoefficient * stabilityOfBlockCoefficient -
-    stabilitySurroundingCoeffienct;
+  const netStability =
+    stabilityOfRowCoefficient * stabilitySurroundingCoeffienct;
   console.log(
-    `stabiilty for row ${rowIndex} block ${blockIndex} is ${stability} - calc from row coeff ${stabilityOfRowCoefficient} * block coeff ${stabilityOfBlockCoefficient} - surrounding coeff ${stabilitySurroundingCoeffienct}`,
+    `stabiilty for row ${rowIndex} block ${blockIndex} is ${netStability} - calc from row coeff ${stabilityOfRowCoefficient} * surrounding coeff ${stabilitySurroundingCoeffienct})`,
   );
 
-  return stability >= collapseThreshold;
+  return netStability >= collapseThreshold;
 }
