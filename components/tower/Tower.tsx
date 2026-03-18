@@ -16,12 +16,12 @@ export default function Tower({
     tower.nextBlockPull + dishonesty,
   );
   useEffect(() => {
-    if (remainingBlockPulls <= 0) {
+    if (remainingBlockPulls <= 0 || tower.collapsed) {
       setContinueButtonEnabled(true);
     } else {
       setContinueButtonEnabled(false);
     }
-  }, [remainingBlockPulls, setContinueButtonEnabled]);
+  }, [remainingBlockPulls, setContinueButtonEnabled, tower.collapsed]);
 
   const [tappedRow, setTappedRow] = useState<number | null>(null);
   const [tappedBlock, setTappedBlock] = useState<number | null>(null);
@@ -44,7 +44,6 @@ export default function Tower({
     } else {
       if (isUnstable(tower, rowIndex, blockIndex)) {
         shouldCollapse = true;
-        setContinueButtonEnabled(true);
       }
     }
     if (shouldCollapse) {
