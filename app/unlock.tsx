@@ -27,7 +27,10 @@ export default function Unlock() {
 
   const checkCode = () => {
     setError(false);
-    if (code === "aleenaTestCode") {
+    if (
+      code.trim().toLowerCase() === "aleenatest" ||
+      code.trim().toLowerCase() === "deceit"
+    ) {
       updateContentUnlocked(true);
       setSuccess(true);
       setTimeout(() => {
