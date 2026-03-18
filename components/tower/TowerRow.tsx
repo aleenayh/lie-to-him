@@ -126,10 +126,10 @@ export function Block({
     return Math.random() > 0.5 ? 1 : -1;
   };
 
-  const randomRotationX = Math.random() * randomPosOrNeg() * 0.2;
-  const randomRotationY = Math.random() * randomPosOrNeg() * 0.2;
+  const randomRotationX = Math.random() * randomPosOrNeg() * 0.01;
+  const randomRotationY = Math.random() * -0.001;
   const randomTransformX =
-    Math.max(Math.random(), 0.001) * randomPosOrNeg() * 0.2;
+    Math.max(Math.random(), 0.001) * randomPosOrNeg() * 0.02;
 
   useFrame(() => {
     if (ref.current && collapsed) {
