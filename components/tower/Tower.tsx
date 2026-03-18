@@ -1,16 +1,20 @@
 import { Canvas } from "@react-three/fiber";
 import { useGame } from "@state/Context";
-import { GameState } from "@state/schema";
-import { useState } from "react";
+import type { GameState } from "@state/schema";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TowerRow } from "./TowerRow";
 
-export default function Tower() {
+export default function Tower({setContinueButtonEnabled}: {setContinueButtonEnabled: (enabled: boolean) => void}) {
   const { gameState, updateGameState } = useGame();
   const { tower, dishonesty } = gameState;
   const [remainingBlockPulls, setRemainingBlockPulls] = useState(
     tower.nextBlockPull + dishonesty,
   );
+  useEffect(() => {
+    setContinueButtonEnabled(remainingBlockPulls > 0);
+  }, [remainingBlockPulls, setContinueButtonEnabled]);
+
   const [tappedRow, setTappedRow] = useState<number | null>(null);
   const [tappedBlock, setTappedBlock] = useState<number | null>(null);
 
@@ -194,9 +198,9 @@ function isUnstable(
   const stability =
     stabilityOfRowCoefficient * stabilityOfBlockCoefficient -
     stabilitySurroundingCoeffienct;
-  // console.log(
-  //   `stabiilty for row ${rowIndex} block ${blockIndex} is ${stability} - calc from row coeff ${stabilityOfRowCoefficient} * block coeff ${stabilityOfBlockCoefficient} - surrounding coeff ${stabilitySurroundingCoeffienct}`,
-  // );
+  console.log(
+    `stabiilty for row ${rowIndex} block ${blockIndex} is ${stability} - calc from row coeff ${stabilityOfRowCoefficient} * block coeff ${stabilityOfBlockCoefficient} - surrounding coeff ${stabilitySurroundingCoeffienct}`,
+  );
 
   return stability >= collapseThreshold;
 }

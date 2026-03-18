@@ -6,10 +6,12 @@ export default function ModalComponent({
   visible,
   onRequestClose,
   children,
+  continueButtonEnabled = true,
 }: {
   visible: boolean;
   onRequestClose: () => void;
   children?: React.ReactNode;
+  continueButtonEnabled?: boolean;
 }) {
   return (
     <Modal
@@ -27,7 +29,11 @@ export default function ModalComponent({
           <View style={styles.interior}>
             {children}
 
-            <Pressable onPress={onRequestClose} style={styles.button}>
+            <Pressable
+              onPress={onRequestClose}
+              style={[styles.button, !continueButtonEnabled && styles.disabled]}
+              disabled={!continueButtonEnabled}
+            >
               <Text style={styles.buttonText}>continue</Text>
             </Pressable>
           </View>
@@ -153,5 +159,8 @@ const styles = StyleSheet.create({
     color: "#e7cda7",
     fontFamily: "typewriter",
     fontSize: 24,
+  },
+  disabled: {
+    opacity: 0.8,
   },
 });
