@@ -13,24 +13,27 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Swipeable, {
-	SwipeDirection,
+  SwipeDirection,
 } from "react-native-gesture-handler/ReanimatedSwipeable";
 import ModalComponent from "../components/Modal";
 
 export default function Game() {
-  const { gameState, updateGameState, contentUnlocked } = useGame();
-  const [view, setView] = useState<"game" | "journal">("game");
-  const [cardVisible, setCardVisible] = useState(false);
-  const [towerVisible, setTowerVisible] = useState(false);
-  const [cardDetails, setCardDetails] = useState<{
-    card: CardDetails;
-    reversed: boolean;
-    drawnIsHigher: boolean;
-    difference: number;
-  } | null>(null);
-  const [showBlocked, setShowBlocked] = useState(
-    !contentUnlocked && gameState.turnCount >= 5,
-  );
+	const { gameState, updateGameState, contentUnlocked } = useGame();
+	const [view, setView] = useState<"game" | "journal">("game");
+	const [cardVisible, setCardVisible] = useState(false);
+	const [towerVisible, setTowerVisible] = useState(false);
+	const [cardDetails, setCardDetails] = useState<{
+		card: CardDetails;
+		reversed: boolean;
+		drawnIsHigher: boolean;
+		difference: number;
+	} | null>(null);
+	const [showBlocked, setShowBlocked] = useState(
+		!contentUnlocked && gameState.turnCount >= 5,
+	);
+	const [towerContinueButtonEnabled, setTowerContinueButtonEnabled] =
+		useState(false);
+  useState(false);
 
   const triggerDrawCard = () => {
     const reversed = Math.random() < 0.5;
@@ -245,8 +248,9 @@ export default function Game() {
             <ModalComponent
               visible={towerVisible}
               onRequestClose={checkGameOverAndRoute}
+              continueButtonEnabled={towerContinueButtonEnabled}
             >
-              <Tower />
+              <Tower setContinueButtonEnabled={setTowerContinueButtonEnabled} />
             </ModalComponent>
             <ModalComponent
               visible={showBlocked}
