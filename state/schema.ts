@@ -4,7 +4,9 @@ import { defaultGameState } from "./default";
 const towerSchema = z.object({
   nextBlockPull: z.coerce.number().catch(0), //adjustment ++ to base
   collapsed: z.boolean().catch(false),
-  rows: z.array(z.array(z.boolean().catch(true)))
+  rows: z.array(z.array(z.boolean().catch(true))),
+  leanDirection: z.enum(["left", "right"]).optional().catch(undefined),
+  leanAmount: z.number().optional().catch(undefined),
 })
 
 export type Tower = z.infer<typeof towerSchema>;
