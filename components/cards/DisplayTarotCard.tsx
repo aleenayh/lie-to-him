@@ -40,7 +40,7 @@ export default function DisplayTarotCard({
   const fadingStyle = useAnimatedStyle(() => {
     return {
       ...styles.cover,
-      opacity: withTiming(0, { duration: 3000 }),
+      opacity: textOpacity.value,
     };
   });
 

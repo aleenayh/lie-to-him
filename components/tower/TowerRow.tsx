@@ -28,6 +28,8 @@ export function TowerRow({
   const faceLeft = rowIndex % 2 === 0;
   const OFFSET_Y = 2.2;
 
+  //TODO - build visual clue that tower is leaning
+
   if (faceLeft) {
     return (
       <group position={[-0.6, 0.34 * rowIndex - OFFSET_Y, -0.9]}>
