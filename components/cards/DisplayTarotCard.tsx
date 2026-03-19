@@ -25,12 +25,12 @@ export default function DisplayTarotCard({
       <Animated.View
         key={card.name}
         style={styles.container}
-        entering={FadeIn.duration(5000)}
+        entering={FadeIn.duration(3000)}
         exiting={FadeOut}
       >
         <Text style={styles.title}>
           {card.name}
-          {reversed && card.type === "majorArcana" ? ": Reversed" : ""}
+          {reversed && card.type === "majorArcana" ? ": Reversed" : ": Upright"}
         </Text>
         <View style={styles.imageContainer}>
           {card.image && (
@@ -45,10 +45,13 @@ export default function DisplayTarotCard({
         </View>
         <Text style={styles.description}>{description}</Text>
 
-        {drawnIsHigher && (
+        {drawnIsHigher ? (
           <Text style={styles.description}>
-            (This will flip your story card for {card.type} and{" "}
-            {getEffect(difference)})
+            (This will flip your story card for {card.type})
+          </Text>
+        ) : (
+          <Text style={styles.description}>
+            (This will {getEffect(difference)})
           </Text>
         )}
       </Animated.View>
