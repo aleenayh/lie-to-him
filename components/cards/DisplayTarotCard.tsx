@@ -1,8 +1,11 @@
+import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Animated, {
+  Easing,
   FadeIn,
   FadeOut,
   useAnimatedStyle,
+  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import type { CardDetails } from "./cards";
@@ -21,21 +24,29 @@ export default function DisplayTarotCard({
 }) {
   const { card, reversed, drawnIsHigher, difference } = inputs;
   const description = getDescription(card, reversed, drawnIsHigher);
+  const textOpacity = useSharedValue(1);
 
-  const fadeOut = useAnimatedStyle(() => {
+  const fadeOut = useCallback(() => {
+    textOpacity.value = withTiming(0, {
+      duration: 2500,
+      easing: Easing.linear,
+    });
+  }, [textOpacity]);
+
+  useEffect(() => {
+    fadeOut();
+  }, [fadeOut]);
+
+  const fadingStyle = useAnimatedStyle(() => {
     return {
-      opacity: withTiming(0, { duration: 3000 }),
+      ...styles.cover,
+      opacity: textOpacity.value,
     };
   });
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        key={`fadeInText-${card.name}`}
-        entering={FadeIn.duration(0)}
-        exiting={FadeOut}
-        style={[styles.cover, { opacity: 1 }, fadeOut]}
-      >
+      <Animated.View style={fadingStyle}>
         <Text style={styles.coverText}>Lie to Him</Text>
       </Animated.View>
       <Animated.View
@@ -67,13 +78,11 @@ export default function DisplayTarotCard({
 
         {drawnIsHigher && card.type !== "majorArcana" && (
           <Text style={styles.description}>
-            (This will flip your story card for {card.type})
+            Flip your story card for {card.type}.
           </Text>
         )}
         {card.type !== "majorArcana" && !drawnIsHigher && (
-          <Text style={styles.description}>
-            (This will {getEffect(difference)})
-          </Text>
+          <Text style={styles.description}>{getEffect(difference)}</Text>
         )}
       </Animated.View>
     </View>
@@ -133,9 +142,9 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
+    width: "100%",
+    height: "100%",
     opacity: 0.7,
-    zIndex: -1,
-    inset: 0,
   },
   reversedImage: {
     transform: [{ rotate: "180deg" }],
@@ -172,16 +181,16 @@ function getDescription(
 
 function getEffect(difference: number) {
   if (difference <= 3) {
-    return "increase desperation by 1.";
+    return "Increase desperation by 1.";
   }
   if (difference <= 6) {
-    return "increase dishonesty by 1.";
+    return "Increase dishonesty by 1.";
   }
   if (difference <= 9) {
-    return "increase desperation by 2, pull 2 blocks.";
+    return "Increase desperation by 2 and pull 2 blocks.";
   }
   if (difference <= 12) {
-    return "increase dishonesty by 2, pull 2 blocks.";
+    return "Increase dishonesty by 2 and pull 2 blocks.";
   }
-  return "have no additional effect.";
+  return "";
 }
