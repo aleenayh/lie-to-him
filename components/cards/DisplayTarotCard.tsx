@@ -1,5 +1,10 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import Animated, {
+  FadeIn,
+  FadeOut,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
 import type { CardDetails } from "./cards";
 
 type CardDetailInputs = {
@@ -17,11 +22,22 @@ export default function DisplayTarotCard({
   const { card, reversed, drawnIsHigher, difference } = inputs;
   const description = getDescription(card, reversed, drawnIsHigher);
 
+  const fadeOut = useAnimatedStyle(() => {
+    return {
+      opacity: withTiming(0, { duration: 3000 }),
+    };
+  });
+
   return (
     <View style={styles.container}>
-      <View style={styles.cover}>
+      <Animated.View
+        key={`fadeInText-${card.name}`}
+        entering={FadeIn.duration(0)}
+        exiting={FadeOut}
+        style={[styles.cover, { opacity: 1 }, fadeOut]}
+      >
         <Text style={styles.coverText}>Lie to Him</Text>
-      </View>
+      </Animated.View>
       <Animated.View
         key={card.name}
         style={styles.container}
@@ -108,17 +124,16 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height: "75%",
+    height: "auto",
     aspectRatio: 9 / 16,
-    width: "auto",
-    padding: 10,
+    width: "90%",
     borderWidth: 2,
     borderColor: "#e7cda7",
     overflow: "hidden",
   },
   image: {
-    resizeMode: "center",
-    opacity: 1,
+    resizeMode: "contain",
+    opacity: 0.7,
     zIndex: -1,
     inset: 0,
   },
