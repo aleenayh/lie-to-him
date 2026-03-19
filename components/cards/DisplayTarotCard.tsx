@@ -1,8 +1,11 @@
+import { useCallback, useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Animated, {
+  Easing,
   FadeIn,
   FadeOut,
   useAnimatedStyle,
+  useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import type { CardDetails } from "./cards";
@@ -20,22 +23,30 @@ export default function DisplayTarotCard({
   inputs: CardDetailInputs;
 }) {
   const { card, reversed, drawnIsHigher, difference } = inputs;
-  const description = getDescription(card, reversed, drawnIsHigher);
+  const description = getDescription(card, reversed);
+  const textOpacity = useSharedValue(1);
 
-  const fadeOut = useAnimatedStyle(() => {
+  const fadeOut = useCallback(() => {
+    textOpacity.value = withTiming(0, {
+      duration: 2500,
+      easing: Easing.linear,
+    });
+  }, [textOpacity]);
+
+  useEffect(() => {
+    fadeOut();
+  }, [fadeOut]);
+
+  const fadingStyle = useAnimatedStyle(() => {
     return {
+      ...styles.cover,
       opacity: withTiming(0, { duration: 3000 }),
     };
   });
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        key={`fadeInText-${card.name}`}
-        entering={FadeIn.duration(0)}
-        exiting={FadeOut}
-        style={[styles.cover, { opacity: 1 }, fadeOut]}
-      >
+      <Animated.View style={fadingStyle}>
         <Text style={styles.coverText}>Lie to Him</Text>
       </Animated.View>
       <Animated.View
@@ -67,13 +78,11 @@ export default function DisplayTarotCard({
 
         {drawnIsHigher && card.type !== "majorArcana" && (
           <Text style={styles.description}>
-            (This will flip your story card for {card.type})
+            Flip your story card for {card.type}.
           </Text>
         )}
         {card.type !== "majorArcana" && !drawnIsHigher && (
-          <Text style={styles.description}>
-            (This will {getEffect(difference)})
-          </Text>
+          <Text style={styles.description}>{getEffect(difference)}</Text>
         )}
       </Animated.View>
     </View>
@@ -134,54 +143,43 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: "contain",
     opacity: 0.7,
-    zIndex: -1,
-    inset: 0,
+    borderRadius: 15,
+    width: "100%",
+    height: "100%",
   },
   reversedImage: {
     transform: [{ rotate: "180deg" }],
   },
 });
 
-function getDescription(
-  card: CardDetails,
-  reversed: boolean,
-  drawnIsHigher: boolean,
-) {
+function getDescription(card: CardDetails, reversed: boolean) {
   if (card.type === "majorArcana") {
     return reversed ? card.descriptionReversed : card.descriptionUpright;
   }
   switch (card.type) {
     case "wands":
-      return drawnIsHigher
-        ? "Appeal to his emotions. He doubts you when your passion is performative."
-        : "Appeal to his emotions. He believes you when you break his heart.";
+      return "Appeal to his emotions. He doubts you when your passion is performative. He believes you when you break his heart.";
     case "cups":
-      return drawnIsHigher
-        ? "Overwhelm him with details. He doubts you when the details begin to contradict each other."
-        : "Overwhelm him with details. He believes you when the specificity feels real.";
+      return "Overwhelm him with details. He doubts you when the details begin to contradict each other. He believes you when the specificity feels real.";
     case "pentacles":
-      return drawnIsHigher
-        ? "Disarm him with logic. He doubts you when your argument is fallacious or circular."
-        : "Disarm him with logic. He believes you when you confuse him with complexity.";
+      return "Disarm him with logic. He doubts you when your argument is fallacious or circular. He believes you when you confuse him with complexity.";
     case "swords":
-      return drawnIsHigher
-        ? "Intimidate him with your certainty. He doubts you when his anger rears its head in response."
-        : "Intimidate him with your certainty. He believes you when the force of your argument beats his doubts away.";
+      return "Intimidate him with your certainty. He doubts you when his anger rears its head in response. He believes you when the force of your argument beats his doubts away.";
   }
 }
 
 function getEffect(difference: number) {
   if (difference <= 3) {
-    return "increase desperation by 1.";
+    return "Increase desperation by 1.";
   }
   if (difference <= 6) {
-    return "increase dishonesty by 1.";
+    return "Increase dishonesty by 1.";
   }
   if (difference <= 9) {
-    return "increase desperation by 2, pull 2 blocks.";
+    return "Increase desperation by 2 and pull 2 blocks.";
   }
   if (difference <= 12) {
-    return "increase dishonesty by 2, pull 2 blocks.";
+    return "Increase dishonesty by 2 and pull 2 blocks.";
   }
-  return "have no additional effect.";
+  return "";
 }
