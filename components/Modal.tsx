@@ -1,4 +1,5 @@
 import { Image, Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 
 const borderSrc = require("../assets/images/border.png");
 
@@ -14,13 +15,12 @@ export default function ModalComponent({
   continueButtonEnabled?: boolean;
 }) {
   return (
-    <Modal
-      animationType="slide"
-      visible={visible}
-      transparent={true}
-      onRequestClose={onRequestClose}
-    >
-      <View style={styles.background}>
+    <Modal visible={visible} transparent={true} onRequestClose={onRequestClose}>
+      <Animated.View
+        entering={SlideInDown.springify(1500)}
+        exiting={SlideOutDown.duration(700)}
+        style={styles.background}
+      >
         <View style={styles.modalContainer}>
           <TopLeftBorder />
           <TopRightBorder />
@@ -38,7 +38,7 @@ export default function ModalComponent({
             </Pressable>
           </View>
         </View>
-      </View>
+      </Animated.View>
     </Modal>
   );
 }
