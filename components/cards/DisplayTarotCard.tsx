@@ -82,7 +82,9 @@ export default function DisplayTarotCard({
           </Text>
         )}
         {card.type !== "majorArcana" && !drawnIsHigher && (
-          <Text style={styles.description}>{getEffect(difference)}</Text>
+          <Text style={styles.description}>
+            {getEffect(Math.abs(difference))}
+          </Text>
         )}
       </Animated.View>
     </View>
