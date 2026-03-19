@@ -1,7 +1,7 @@
-import ContentBlocked from "@components/ContentBlocked";
 import type { CardDetails } from "@components/cards/cards";
 import { cards } from "@components/cards/cards";
 import DisplayTarotCard from "@components/cards/DisplayTarotCard";
+import ContentBlocked from "@components/ContentBlocked";
 import DesperationChain from "@components/DesperationChain";
 import DishonestyChain from "@components/DishonestyChain";
 import Journal from "@components/Journal";
@@ -52,6 +52,7 @@ export default function Game() {
 		setCardVisible(true);
 
 		if (drawnIsHigher && card.type !== "majorArcana") {
+			//drawn is higher, flip story card
 			const mappedType = card.type === "pentacles" ? "pent" : card.type;
 			const filteredDeck = newDeck.filter(
 				(cardKey) => !cardKey.includes(mappedType),
@@ -65,7 +66,7 @@ export default function Game() {
 				deck: filteredDeck,
 			});
 		} else if (card.type !== "majorArcana") {
-      //drawn is lower, get doubt table effects
+			//drawn is lower, get doubt table effects
 			const mappedType = card.type === "pentacles" ? "pent" : card.type;
 			const filteredDeck = newDeck.filter(
 				(cardKey) => !cardKey.includes(mappedType),
@@ -74,18 +75,19 @@ export default function Game() {
 			let desperationAdjustment = 0;
 			let nextBlockPullAdjustment = 0;
 			//minor arcana difference effects
-			if (difference && difference > 0) {
-				if (difference <= 3) {
+			const absoluteDifference = Math.abs(difference);
+			if (absoluteDifference) {
+				if (absoluteDifference <= 3) {
 					//increase desperation by 1
 					desperationAdjustment = 1;
-				} else if (difference > 3 && difference <= 6) {
+				} else if (absoluteDifference > 3 && absoluteDifference <= 6) {
 					//increase dishonesty by 1
 					dishonestyAdjustment = 1;
-				} else if (difference > 6 && difference <= 9) {
+				} else if (absoluteDifference > 6 && absoluteDifference <= 9) {
 					//increase desperation by 2, pull 2 blocks
 					desperationAdjustment = 2;
 					nextBlockPullAdjustment = 2;
-				} else if (difference > 9) {
+				} else if (absoluteDifference > 9) {
 					//increase dishonesty by 2, pull 2 blocks
 					dishonestyAdjustment = 2;
 					nextBlockPullAdjustment = 2;
