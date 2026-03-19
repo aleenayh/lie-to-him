@@ -1,14 +1,8 @@
 import { Canvas } from "@react-three/fiber";
 import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Animated, {
-  Easing,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
 import { TowerRow } from "./TowerRow";
 
 export default function Tower({
@@ -28,27 +22,6 @@ export default function Tower({
       setContinueButtonEnabled(false);
     }
   }, [remainingBlockPulls, setContinueButtonEnabled, tower.collapsed]);
-
-  const textOpacity = useSharedValue(1);
-  const fadeOut = useCallback(() => {
-    textOpacity.value = withTiming(0, {
-      duration: 1500,
-      easing: Easing.linear,
-    });
-  }, [textOpacity]);
-
-  useEffect(() => {
-    if (tower.collapsed) {
-      fadeOut();
-    }
-  }, [fadeOut, tower.collapsed]);
-
-  const fadingStyle = useAnimatedStyle(() => {
-    return {
-      ...styles.text,
-      opacity: textOpacity.value,
-    };
-  });
 
   const [tappedRow, setTappedRow] = useState<number | null>(null);
   const [tappedBlock, setTappedBlock] = useState<number | null>(null);
@@ -102,10 +75,10 @@ export default function Tower({
 
   return (
     <View style={styles.page}>
-      <Animated.Text style={fadingStyle}>
+      <Text style={styles.text}>
         Pull {remainingBlockPulls} block{remainingBlockPulls === 1 ? "" : "s"}{" "}
         from your tower
-      </Animated.Text>
+      </Text>
       <Canvas
         style={{ height: 100, width: 200 }}
         fallback={<Text>Error rendering tower!</Text>}
