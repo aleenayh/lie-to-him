@@ -13,6 +13,8 @@ export default function GameOver() {
   } = useGame();
 
   const gameOverMessage = getGameOverMessage(gameOverReason, desperation);
+  const gameOverTitle =
+    gameOverReason === "storyOver" ? "Story Complete" : "The Tower Falls";
 
   //TODO: provide a way to save story
 
@@ -21,9 +23,9 @@ export default function GameOver() {
       <Image source={skeletonImage} style={styles.backgroundImage} />
       <Image source={skeletonImage} style={styles.backgroundImageReversed} />
       <View style={styles.container}>
-        <Text style={styles.header}>Game Over</Text>
+        <Text style={styles.header}>{gameOverTitle}</Text>
         <Text style={styles.text}>{gameOverMessage}</Text>
-        <JournalInterior variant="brown" hideIfEmpty/>
+        <JournalInterior variant="brown" hideIfEmpty />
         <Pressable onPress={() => router.push("/")}>
           <Text style={styles.button}>Return to Main Menu</Text>
         </Pressable>
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontFamily: "rocker",
     fontSize: 64,
+    textAlign: "center",
   },
   interior: {
     overflowY: "auto",
