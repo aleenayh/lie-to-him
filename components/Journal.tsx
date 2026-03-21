@@ -1,15 +1,16 @@
 import { useGame } from "@state/Context";
+import * as Clipboard from "expo-clipboard";
 import { useState } from "react";
 import {
-	Keyboard,
-	KeyboardAvoidingView,
-	Platform,
-	Pressable,
-	StyleSheet,
-	Text,
-	TextInput,
-	ToastAndroid,
-	View,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  ToastAndroid,
+  View,
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
@@ -52,6 +53,11 @@ export function JournalInterior({
     ToastAndroid.show("Journal saved", ToastAndroid.SHORT);
   };
 
+  const copyToClipboard = () => {
+    Clipboard.setStringAsync(journalText || "");
+    ToastAndroid.show("Journal copied to clipboard", ToastAndroid.SHORT);
+  };
+
   if (hideIfEmpty && gameState.journal?.length === 0) {
     return null;
   }
@@ -71,9 +77,9 @@ export function JournalInterior({
         autoCapitalize="sentences"
       />
 
-      <Pressable onPress={saveJournal}>
+      <Pressable onPress={hideIfEmpty ? copyToClipboard : saveJournal}>
         <Text style={variant === "tan" ? styles.buttonTan : styles.buttonBrown}>
-          Save Journal
+          {hideIfEmpty ? "Copy Journal" : "Save Journal"}
         </Text>
       </Pressable>
     </KeyboardAvoidingView>

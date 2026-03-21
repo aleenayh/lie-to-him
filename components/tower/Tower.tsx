@@ -69,8 +69,9 @@ export default function Tower({
       tower,
       rowIndex,
       blockIndex,
+      velocity,
     );
-    if (velocity > 0.5) {
+    if (velocity > 0.8) {
       shouldCollapse = true;
     } else {
       if (collapse) {
@@ -179,23 +180,28 @@ function isUnstable(
   tower: GameState["tower"],
   rowIndex: number,
   blockIndex: number,
+  velocity: number,
 ): {
   collapse: boolean;
   leanDirection?: "left" | "right";
   leanAmount?: number;
 } {
-  const collapseThreshold = 0.35;
-  const rowAbove = tower.rows[rowIndex + 1];
-  const rowBelow = tower.rows[rowIndex - 1];
+  const collapseThreshold = 0.24;
+  const rowAbove = tower.rows[rowIndex + 1] ?? [false, false, false];
+  const rowBelow = tower.rows[rowIndex - 1] ?? [false, false, false];
   const thisRow = tower.rows[rowIndex];
   //this shouldn't happen, but if it does we'll let you keep your monstrosity tower
   if (!thisRow) return { collapse: false };
 
   //auto collapse if this is the last block in the row
   const remainingBlocksInRow = thisRow.filter(Boolean).length - 1; //-1 for current block
-  if (remainingBlocksInRow <= 0) return { collapse: true };
+  if (remainingBlocksInRow <= 0 && rowAbove.filter(Boolean).length > 0)
+    return { collapse: true };
 
-  const rowStability = remainingBlocksInRow / 3;
+  const rowStability =
+    blockIndex === 0
+      ? 1 - velocity
+      : (remainingBlocksInRow / 3) * (1 - velocity);
 
   //determine if tower leans left or right more
   let leftBlocks = blockIndex === 0 ? -1 : 0;
@@ -233,12 +239,20 @@ function isUnstable(
       ...(rowIndex === 17 ? [] : rowAbove),
       ...(rowIndex === 0 ? [] : rowBelow),
     ].filter(Boolean).length + remainingBlocksInRow;
-  const surroundTotal = rowIndex === 17 || rowIndex === 0 ? 5 : 8;
+  const surroundTotal = rowIndex === 17 || rowIndex === 0 ? 5.25 : 8.25; //intentionally +1/4 to avoid zeros
   const stabilitySurroundingCoeffienct =
     (surroundTotal - surroundingBlocks) / surroundTotal;
 
   const netStability =
-    -stabilityOfRowCoefficient * stabilitySurroundingCoeffienct + rowStability;
+    -stabilityOfRowCoefficient * stabilitySurroundingCoeffienct * velocity +
+    rowStability;
+
+  // console.log(
+  //   `netStability: ${netStability} = stabilityOfRowCoefficient: -${stabilityOfRowCoefficient} * stabilitySurroundingCoeffienct: ${stabilitySurroundingCoeffienct} * velocity: ${velocity} + rowStability: ${rowStability}`,
+  // );
+  // console.log(
+  //   `will collapse: ${netStability < collapseThreshold} (threshold: ${collapseThreshold})`,
+  // );
 
   return {
     collapse: netStability < collapseThreshold,

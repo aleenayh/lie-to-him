@@ -56,7 +56,7 @@ export function IntroText() {
   fadeEachLineIn();
 
   return (
-    <Animated.View style={styles.container} exiting={FadeOut}>
+    <Animated.View style={styles.container} exiting={FadeOut.duration(3000)}>
       <Animated.Text style={[styles.text, { opacity: opacityLine1 }]}>
         He is standing face to face with you.
       </Animated.Text>
