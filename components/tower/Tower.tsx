@@ -4,10 +4,10 @@ import type { GameState } from "@state/schema";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, {
-	Easing,
-	useAnimatedStyle,
-	useSharedValue,
-	withTiming,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 import { TowerRow } from "./TowerRow";
 
@@ -113,7 +113,7 @@ export default function Tower({
         from your tower
       </Animated.Text>
       <Canvas
-        style={{ height: 100, width: 300 }}
+        style={{ height: 100, width: 250 }}
         fallback={<Text>Error rendering tower!</Text>}
       >
         <ambientLight intensity={Math.PI / 2} />
@@ -239,9 +239,6 @@ function isUnstable(
 
   const netStability =
     -stabilityOfRowCoefficient * stabilitySurroundingCoeffienct + rowStability;
-  //   console.log(
-  //     `stabiilty for row ${rowIndex} block ${blockIndex} is ${netStability} - calc from row coeff - ${stabilityOfRowCoefficient} * surrounding coeff ${stabilitySurroundingCoeffienct} (${-stabilityOfRowCoefficient * stabilitySurroundingCoeffienct}) + row stability ${rowStability}`,
-  //   );
 
   return {
     collapse: netStability < collapseThreshold,

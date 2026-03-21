@@ -4,6 +4,7 @@ import Animated, {
   RotateInUpRight,
   RotateOutDownRight,
 } from "react-native-reanimated";
+import { getFontSize } from "./utils";
 
 const TEXT_LENGTH = 115;
 const TEXT_HEIGHT = 70;
@@ -67,7 +68,7 @@ export const chainStyles = StyleSheet.create({
     width: TEXT_LENGTH,
     height: TEXT_HEIGHT,
     fontFamily: "rocker",
-    fontSize: 24,
+    fontSize: getFontSize(20),
     color: "#9a5341",
     overflow: "visible",
   },
