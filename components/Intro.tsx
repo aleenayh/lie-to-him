@@ -1,77 +1,121 @@
 import { useGame } from "@state/Context";
-import { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { useCallback, useMemo, useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
-    Easing,
-    FadeOut,
-    type SharedValue,
-    useSharedValue,
-    withTiming,
+  Easing,
+  FadeIn,
+  FadeOut,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
 
 export function IntroText() {
   const { gameState, updateGameState } = useGame();
+  const [viewShown, setViewShown] = useState<"intro1" | "intro2">("intro1");
 
+  const startGame = () => {
+    updateGameState({ ...gameState, turnCount: 1 });
+  };
+
+  return (
+    <View style={{ width: "100%", height: "100%" }}>
+      {viewShown === "intro1" && (
+        <Animated.View
+          style={styles.container}
+          exiting={FadeOut.duration(2000)}
+        >
+          <CascadingText
+            onPress={() => {
+              setViewShown("intro2");
+            }}
+            textLines={[
+              "He is standing face to face with you.",
+              "He trusts you.",
+              "He wants to know the truth.",
+            ]}
+            onPressText="He cannot know the truth."
+          />
+        </Animated.View>
+      )}
+      {viewShown === "intro2" && (
+        <Animated.View
+          style={styles.container}
+          entering={FadeIn.duration(2000)}
+          exiting={FadeOut.duration(2000)}
+        >
+          <CascadingText
+            onPress={startGame}
+            textLines={[
+              "The details of the situation are up to you.",
+              "The lies you tell are up to you.",
+              "There is only one constant:",
+            ]}
+            onPressText="You must lie to him."
+          />
+        </Animated.View>
+      )}
+    </View>
+  );
+}
+
+function CascadingText({
+  onPress,
+  textLines,
+  onPressText,
+}: {
+  onPress: () => void;
+  textLines: string[];
+  onPressText: string;
+}) {
   const opacityLine1 = useSharedValue(0);
   const opacityLine2 = useSharedValue(0);
   const opacityLine3 = useSharedValue(0);
-  const opacityLine4 = useSharedValue(0);
-  const opacityLine5 = useSharedValue(0);
+  const opacityLines = useMemo(() => [opacityLine1, opacityLine2, opacityLine3], [opacityLine1, opacityLine2, opacityLine3]);
 
-  const fadeIn = useCallback((sharedValue: SharedValue<number>) => {
-    sharedValue.value = withTiming(1, {
-      duration: 1000,
-      easing: Easing.linear,
-    });
-  }, []);
+  const DELAY_BETWEEN = 3200;
+  const DURATION = 2000;
+
+  const fadeIn = useCallback(
+    (index: number) => {
+      opacityLines[index].value = withTiming(1, {
+        duration: DURATION,
+        easing: Easing.linear,
+      });
+    },
+    [opacityLines],
+  );
 
   const fadeEachLineIn = useCallback(() => {
-    fadeIn(opacityLine1);
-    setTimeout(() => {
-      fadeIn(opacityLine2);
-    }, 2000);
-    setTimeout(() => {
-      fadeIn(opacityLine3);
-    }, 4000);
-    setTimeout(() => {
-      fadeIn(opacityLine4);
-    }, 8000);
-    setTimeout(() => {
-      fadeIn(opacityLine5);
-    }, 11000);
-    setTimeout(() => {
-      updateGameState({ ...gameState, turnCount: 1 });
-    }, 13000);
-  }, [
-    fadeIn,
-    opacityLine1,
-    opacityLine2,
-    opacityLine3,
-    opacityLine4,
-    opacityLine5,
-    gameState,
-    updateGameState,
-  ]);
+    textLines.forEach((_, index) => {
+      setTimeout(() => {
+        fadeIn(index);
+      }, index * DELAY_BETWEEN);
+    });
+  }, [fadeIn, textLines]);
 
   fadeEachLineIn();
 
   return (
     <Animated.View style={styles.container} exiting={FadeOut.duration(3000)}>
-      <Animated.Text style={[styles.text, { opacity: opacityLine1 }]}>
-        He is standing face to face with you.
-      </Animated.Text>
-      <Animated.Text style={[styles.text, { opacity: opacityLine2 }]}>
-        He trusts you.
-      </Animated.Text>
-      <Animated.Text style={[styles.text, { opacity: opacityLine3 }]}>
-        He wants to know the truth.
-      </Animated.Text>
-      <Animated.Text style={[styles.text, { opacity: opacityLine4 }]}>
-        He cannot know the truth.
-      </Animated.Text>
-      <Animated.Text style={[styles.text, { opacity: opacityLine5 }]}>
-        LIE TO HIM.
-      </Animated.Text>
+      {textLines.map((line, index) => (
+        <Animated.Text
+          // biome-ignore lint/suspicious/noArrayIndexKey: ephemeral text
+          key={index}
+          style={[styles.text, { opacity: opacityLines[index] }]}
+        >
+          {line}
+        </Animated.Text>
+      ))}
+      <Pressable onPress={onPress}>
+        <Animated.View
+          entering={FadeIn.duration(DURATION).delay(
+            (textLines.length + 1) * DELAY_BETWEEN,
+          )}
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>{onPressText}</Text>
+        </Animated.View>
+      </Pressable>
     </Animated.View>
   );
 }
@@ -94,9 +138,28 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   text: {
+    wordWrap: "anywhere",
+    maxWidth: "70%",
     fontSize: 24,
     fontFamily: "typewriter",
     color: "#9a5341",
     textAlign: "center",
+    paddingVertical: 16,
+  },
+  button: {
+    backgroundColor: "#9a5341",
+    width: "100%",
+    borderRadius: 10,
+    textAlign: "center",
+    color: "#e7cda7",
+    fontFamily: "typewriter",
+    fontSize: 24,
+    padding: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "#e7cda7",
+    fontFamily: "typewriter",
+    fontSize: 24,
   },
 });
