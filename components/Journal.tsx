@@ -68,7 +68,10 @@ export function JournalInterior({
       style={styles.container}
     >
       <TextInput
-        style={styles.input}
+        style={[
+          styles.input,
+          hideIfEmpty ? { height: "50%" } : { height: "100%" },
+        ]}
         multiline={true}
         textAlignVertical="top"
         value={journalText}
@@ -76,7 +79,6 @@ export function JournalInterior({
         textBreakStrategy="simple"
         autoCapitalize="sentences"
       />
-
       <Pressable onPress={hideIfEmpty ? copyToClipboard : saveJournal}>
         <Text style={variant === "tan" ? styles.buttonTan : styles.buttonBrown}>
           {hideIfEmpty ? "Copy Journal" : "Save Journal"}
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -119,12 +121,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     textAlign: "center",
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "typewriter",
     fontSize: 24,
   },
   buttonBrown: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     width: "100%",
     padding: 10,
     borderRadius: 10,
@@ -144,7 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
     borderWidth: 1,
-    borderColor: "#9a5341",
+    borderColor: "#765023",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
     wordWrap: "break-word",
   },
   swipePreview: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     display: "flex",
     flex: 1,
     justifyContent: "center",
