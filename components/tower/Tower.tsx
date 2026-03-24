@@ -38,10 +38,10 @@ export default function Tower({
   }, [textOpacity]);
 
   useEffect(() => {
-    if (tower.collapsed) {
+    if (tower.collapsed || remainingBlockPulls <= 0) {
       fadeOut();
     }
-  }, [fadeOut, tower.collapsed]);
+  }, [fadeOut, tower.collapsed, remainingBlockPulls]);
   const fadingStyle = useAnimatedStyle(() => {
     return {
       ...styles.text,

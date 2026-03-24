@@ -1,3 +1,4 @@
+import { BackgroundTexture } from "@components/BackgroundTexture";
 import { useGame } from "@state/Context";
 import { Image } from "expo-image";
 import { Redirect, router } from "expo-router";
@@ -46,6 +47,7 @@ export default function Unlock() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.keyboardAvoidingView}
     >
+      <BackgroundTexture />
       <Pressable
         onPress={() => Keyboard.dismiss()}
         style={{ height: "100%", width: "100%" }}
@@ -106,7 +108,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    backgroundColor: "papayawhip",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -137,6 +138,7 @@ const styles = StyleSheet.create({
   },
   columnStack: {
     backgroundColor: "rgba(255, 239, 213, 0.5)",
+    borderRadius: 15,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

@@ -1,3 +1,4 @@
+import { BackgroundTexture } from "@components/BackgroundTexture";
 import { Image } from "expo-image";
 import { Link, router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -7,6 +8,7 @@ const skeletonImage = require("../assets/images/skeleton.svg");
 export default function About() {
   return (
     <View style={styles.container}>
+      <BackgroundTexture />
       <Image source={skeletonImage} style={styles.backgroundImage} />
       <Image source={skeletonImage} style={styles.backgroundImageReversed} />
       <Text style={styles.header}>Lie To Him</Text>
@@ -65,7 +67,6 @@ export default function About() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "papayawhip",
     flex: 1,
     display: "flex",
     flexDirection: "column",
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     left: "55%",
     width: "100%",
     height: "100%",
-    opacity: 0.2,
+    opacity: 0.35,
   },
   backgroundImageReversed: {
     position: "absolute",
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     transform: [{ rotateY: "180deg" }],
-    opacity: 0.2,
+    opacity: 0.35,
   },
   header: {
     color: "#843b2d",
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
   },
   interior: {
     backgroundColor: "rgba(255, 239, 213, 0.5)",
+    borderRadius: 15,
     maxHeight: "70%",
     overflowY: "auto",
     width: "100%",

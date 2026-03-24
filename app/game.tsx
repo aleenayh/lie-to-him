@@ -1,3 +1,4 @@
+import { BackgroundTexture } from "@components/BackgroundTexture";
 import type { CardDetails } from "@components/cards/cards";
 import { cards } from "@components/cards/cards";
 import DisplayTarotCard from "@components/cards/DisplayTarotCard";
@@ -14,7 +15,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Swipeable, {
-	SwipeDirection,
+  SwipeDirection,
 } from "react-native-gesture-handler/ReanimatedSwipeable";
 import ModalComponent from "../components/Modal";
 
@@ -233,6 +234,7 @@ export default function Game() {
           rightThreshold={100}
         >
           <View style={styles.container}>
+            <BackgroundTexture />
             <View style={styles.column}>
               <Text style={styles.header}>Lie To Him</Text>
               <Text style={styles.text}>Turn {gameState.turnCount}</Text>
@@ -287,7 +289,6 @@ export default function Game() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "papayawhip",
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 40,

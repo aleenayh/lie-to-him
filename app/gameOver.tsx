@@ -1,3 +1,4 @@
+import { BackgroundTexture } from "@components/BackgroundTexture";
 import { JournalInterior } from "@components/Journal";
 import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
@@ -20,6 +21,7 @@ export default function GameOver() {
 
   return (
     <Pressable onPress={() => Keyboard.dismiss()} style={styles.outerContainer}>
+      <BackgroundTexture />
       <Image source={skeletonImage} style={styles.backgroundImage} />
       <Image source={skeletonImage} style={styles.backgroundImageReversed} />
       <View style={styles.container}>
@@ -36,7 +38,6 @@ export default function GameOver() {
 
 const styles = StyleSheet.create({
   outerContainer: {
-    backgroundColor: "papayawhip",
     flex: 1,
     display: "flex",
     flexDirection: "column",
@@ -45,7 +46,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   container: {
-    backgroundColor: "rgba(255, 239, 213, 0.5)",
     justifyContent: "center",
     alignItems: "center",
     display: "flex",

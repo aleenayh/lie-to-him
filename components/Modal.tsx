@@ -43,7 +43,7 @@ export default function ModalComponent({
   );
 }
 
-const TopLeftBorder = () => {
+export const TopLeftBorder = () => {
   return (
     <Image
       source={borderSrc}
@@ -60,7 +60,7 @@ const TopLeftBorder = () => {
   );
 };
 
-const TopRightBorder = () => {
+export const TopRightBorder = () => {
   return (
     <Image
       source={borderSrc}
@@ -77,7 +77,7 @@ const TopRightBorder = () => {
   );
 };
 
-const BottomLeftBorder = () => {
+export const BottomLeftBorder = () => {
   return (
     <Image
       source={borderSrc}
@@ -94,7 +94,7 @@ const BottomLeftBorder = () => {
   );
 };
 
-const BottomRightBorder = () => {
+export const BottomRightBorder = () => {
   return (
     <Image
       source={borderSrc}
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 40,
     marginVertical: 50,
-    backgroundColor: "#e7cda7",
+    backgroundColor: "#efcaa3",
     borderRadius: 10,
     boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
     elevation: 5,

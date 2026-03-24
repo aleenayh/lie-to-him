@@ -138,8 +138,6 @@ const styles = StyleSheet.create({
     height: "auto",
     aspectRatio: 9 / 16,
     width: "90%",
-    borderWidth: 2,
-    borderColor: "#e7cda7",
     overflow: "hidden",
   },
   image: {
