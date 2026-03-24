@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { BackgroundTexture } from "./BackgroundTexture";
 
 export function IntroText() {
   const { gameState, updateGameState } = useGame();
@@ -70,10 +71,13 @@ function CascadingText({
   const opacityLine1 = useSharedValue(0);
   const opacityLine2 = useSharedValue(0);
   const opacityLine3 = useSharedValue(0);
-  const opacityLines = useMemo(() => [opacityLine1, opacityLine2, opacityLine3], [opacityLine1, opacityLine2, opacityLine3]);
+  const opacityLines = useMemo(
+    () => [opacityLine1, opacityLine2, opacityLine3],
+    [opacityLine1, opacityLine2, opacityLine3],
+  );
 
-  const DELAY_BETWEEN = 3200;
-  const DURATION = 2000;
+  const DELAY_BETWEEN = 1600;
+  const DURATION = 1700;
 
   const fadeIn = useCallback(
     (index: number) => {
@@ -97,6 +101,7 @@ function CascadingText({
 
   return (
     <Animated.View style={styles.container} exiting={FadeOut.duration(3000)}>
+      <BackgroundTexture />
       {textLines.map((line, index) => (
         <Animated.Text
           // biome-ignore lint/suspicious/noArrayIndexKey: ephemeral text
@@ -128,26 +133,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     flex: 1,
-    backgroundColor: "papayawhip",
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     zIndex: 100,
-    padding: 16,
   },
   text: {
     wordWrap: "anywhere",
     maxWidth: "70%",
     fontSize: 24,
     fontFamily: "typewriter",
-    color: "#9a5341",
+    color: "#765023",
     textAlign: "center",
     paddingVertical: 16,
   },
   button: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     width: "100%",
     borderRadius: 10,
     textAlign: "center",

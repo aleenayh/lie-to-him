@@ -2,11 +2,11 @@ import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
 import { useState } from "react";
 import {
-  type ImageSourcePropType,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
+    type ImageSourcePropType,
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
 } from "react-native";
 import Animated, { FlipInEasyX, FlipOutEasyX } from "react-native-reanimated";
 import { tarotImages } from "../assets/images/tarot";
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: "center",
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "typewriter",
     marginBottom: 10,
   },

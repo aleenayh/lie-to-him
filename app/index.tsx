@@ -1,3 +1,4 @@
+import { BackgroundTexture } from "@components/BackgroundTexture";
 import { NewRocker_400Regular } from "@expo-google-fonts/new-rocker";
 import { SpecialElite_400Regular } from "@expo-google-fonts/special-elite";
 import { useGame } from "@state/Context";
@@ -42,6 +43,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
+      <BackgroundTexture />
       <Image source={skeletonImage} style={styles.backgroundImage} />
       <Image source={skeletonImage} style={styles.backgroundImageReversed} />
       <Text style={styles.header}>Lie To Him</Text>
@@ -74,7 +76,6 @@ export default function Index() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "papayawhip",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     left: "55%",
     width: "100%",
     height: "100%",
-    opacity: 0.2,
+    opacity: 0.35,
   },
   backgroundImageReversed: {
     position: "absolute",
@@ -95,14 +96,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     transform: [{ rotateY: "180deg" }],
-    opacity: 0.2,
+    opacity: 0.35,
   },
   subheader: {
     fontSize: 24,
     padding: 8,
     fontFamily: "typewriter",
     textAlign: "center",
-    color: "#9a5341",
+    color: "#765023",
   },
   header: {
     color: "#843b2d",
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 64,
   },
   button: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     width: "80%",
     borderRadius: 10,
     marginHorizontal: "auto",

@@ -38,10 +38,10 @@ export default function Tower({
   }, [textOpacity]);
 
   useEffect(() => {
-    if (tower.collapsed) {
+    if (tower.collapsed || remainingBlockPulls <= 0) {
       fadeOut();
     }
-  }, [fadeOut, tower.collapsed]);
+  }, [fadeOut, tower.collapsed, remainingBlockPulls]);
   const fadingStyle = useAnimatedStyle(() => {
     return {
       ...styles.text,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   button: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     width: "80%",
     borderRadius: 10,
     marginHorizontal: "auto",
