@@ -1,6 +1,6 @@
 import { useGame } from "@state/Context";
 import { useCallback, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import Animated, {
   Easing,
   FadeIn,
@@ -19,7 +19,11 @@ export function IntroText() {
   };
 
   return (
-    <View style={{ width: "100%", height: "100%" }}>
+    <Animated.View
+      style={{ width: "100%", height: "100%" }}
+      exiting={FadeOut.duration(2000)}
+    >
+      <BackgroundTexture />
       {viewShown === "intro1" && (
         <Animated.View
           style={styles.container}
@@ -55,7 +59,7 @@ export function IntroText() {
           />
         </Animated.View>
       )}
-    </View>
+    </Animated.View>
   );
 }
 
@@ -101,7 +105,6 @@ function CascadingText({
 
   return (
     <Animated.View style={styles.container} exiting={FadeOut.duration(3000)}>
-      <BackgroundTexture />
       {textLines.map((line, index) => (
         <Animated.Text
           // biome-ignore lint/suspicious/noArrayIndexKey: ephemeral text
@@ -132,7 +135,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    flex: 1,
     position: "absolute",
     top: 0,
     left: 0,
