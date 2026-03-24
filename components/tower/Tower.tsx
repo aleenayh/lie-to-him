@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   button: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     width: "80%",
     borderRadius: 10,
     marginHorizontal: "auto",

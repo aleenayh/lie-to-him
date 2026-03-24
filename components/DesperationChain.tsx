@@ -1,8 +1,8 @@
 import { useGame } from "@state/Context";
 import { StyleSheet, Text, View } from "react-native";
 import Animated, {
-  RotateInUpRight,
-  RotateOutDownRight,
+    RotateInUpRight,
+    RotateOutDownRight,
 } from "react-native-reanimated";
 import { getFontSize } from "./utils";
 
@@ -69,7 +69,7 @@ export const chainStyles = StyleSheet.create({
     height: TEXT_HEIGHT,
     fontFamily: "rocker",
     fontSize: getFontSize(20),
-    color: "#9a5341",
+    color: "#765023",
     overflow: "visible",
   },
   string: {
@@ -88,12 +88,12 @@ export const chainStyles = StyleSheet.create({
     height: "100%",
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "#9a5341",
+    borderColor: "#765023",
   },
   chainItemFilled: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     borderWidth: 1,
-    borderColor: "#9a5341",
+    borderColor: "#765023",
     borderRadius: 2,
     width: 15,
     height: 15,

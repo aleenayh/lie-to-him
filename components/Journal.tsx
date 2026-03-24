@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: "#9a5341",
     justifyContent: "center",
-    alignItems: "stretch",
+    alignItems: "center",
   },
   container: {
     justifyContent: "center",

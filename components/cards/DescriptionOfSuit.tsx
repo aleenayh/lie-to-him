@@ -1,9 +1,9 @@
 import {
-	Image,
-	type ImageSourcePropType,
-	StyleSheet,
-	Text,
-	View,
+  Image,
+  type ImageSourcePropType,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 export default function DescriptionOfSuit({
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: "center",
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "typewriter",
   },
   imageContainer: {
@@ -85,8 +85,6 @@ const styles = StyleSheet.create({
     height: "auto",
     aspectRatio: 9 / 16,
     width: "90%",
-    borderWidth: 2,
-    borderColor: "#e7cda7",
     overflow: "hidden",
   },
   image: {
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     textAlign: "center",
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "typewriter",
     marginBottom: 10,
   },

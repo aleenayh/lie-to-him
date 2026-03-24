@@ -32,7 +32,7 @@ export function TowerRow({
 
   if (faceLeft) {
     return (
-      <group position={[-0.6, 0.34 * rowIndex - OFFSET_Y, -0.9]}>
+      <group position={[-0.6, 0.345 * rowIndex - OFFSET_Y, -0.9]}>
         {blocks.map((block, blockIndex) => {
           if (!block) return null;
           return (
@@ -50,7 +50,7 @@ export function TowerRow({
                 ],
                 rotation: [0.34, -0.9, 0],
               }}
-              color={blockIndex === 1 ? "#b8634d" : "#9a5341"}
+              color={blockIndex === 1 ? "#a87f4e" : "#8b6434"}
               handleBlockMove={(velocity: number) =>
                 handleBlockMove(rowIndex, blockIndex, velocity)
               }
@@ -63,7 +63,7 @@ export function TowerRow({
     );
   } else {
     return (
-      <group position={[-0.6, 0.34 * rowIndex - OFFSET_Y - 0.3, -0.1]}>
+      <group position={[-0.6, 0.345 * rowIndex - OFFSET_Y - 0.3, -0.1]}>
         {blocks.map((block, blockIndex) => {
           if (!block) return null;
           return (
@@ -76,12 +76,12 @@ export function TowerRow({
               props={{
                 position: [
                   0.48 * blockIndex,
-                  0.14 * blockIndex,
+                  0.13 * blockIndex,
                   -0.34 * blockIndex,
                 ],
                 rotation: [0.34, 0.72, 0],
               }}
-              color={blockIndex === 1 ? "#a1523f" : "#c76a52"}
+              color={blockIndex === 1 ? "#a87f4e" : "#997243"}
               handleBlockMove={(velocity: number) =>
                 handleBlockMove(rowIndex, blockIndex, velocity)
               }
@@ -201,8 +201,8 @@ export function Block({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
     >
-      <boxGeometry args={[0.65, 0.34, 1.7]} />
-      <meshStandardMaterial color={tapped ? "#f2a18d" : (color ?? "#9a5341")} />
+      <boxGeometry args={[0.65, 0.32, 1.7]} />
+      <meshStandardMaterial color={tapped ? "#d4a15c" : (color ?? "#765023")} />
     </mesh>
   );
 }

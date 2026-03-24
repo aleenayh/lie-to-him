@@ -11,6 +11,7 @@ import StoryHolder from "@components/StoryHolder";
 import Tower from "@components/tower/Tower";
 import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -18,6 +19,9 @@ import Swipeable, {
   SwipeDirection,
 } from "react-native-gesture-handler/ReanimatedSwipeable";
 import ModalComponent from "../components/Modal";
+
+const skullImage = require("../assets/images/skull.svg");
+const quillImage = require("../assets/images/quill.svg");
 
 export default function Game() {
   const { gameState, updateGameState, contentUnlocked } = useGame();
@@ -183,6 +187,15 @@ export default function Game() {
     setTowerVisible(false);
   };
 
+  const goToJournal = () => {
+    //TODO ideally I want the swipe animation also so the clue in to that gesture, currently jumps straight to it
+    handleSwipe(SwipeDirection.LEFT);
+  };
+  const goToMenu = () => {
+    //TODO ideally I want the swipe animation also so the clue in to that gesture, currently jumps straight to its
+    handleSwipe(SwipeDirection.RIGHT);
+  };
+
   const handleSwipe = (direction: SwipeDirection) => {
     switch (direction) {
       case SwipeDirection.RIGHT:
@@ -256,13 +269,21 @@ export default function Game() {
                 </View>
                 <DishonestyChain />
               </View>
+              <View style={styles.teaserContainer}>
+                <Pressable onPress={goToMenu}>
+                  <Image source={skullImage} style={styles.teaserButton} />
+                </Pressable>
+                <Pressable onPress={goToJournal}>
+                  <Image source={quillImage} style={styles.teaserButton} />
+                </Pressable>
+              </View>
               <StoryHolder />
             </View>
             <ModalComponent visible={cardVisible} onRequestClose={showTower}>
               {cardDetails ? (
                 <DisplayTarotCard inputs={cardDetails} />
               ) : (
-                <Text>Uh oh! We couldn't find that card.</Text>
+                <Text>Oh no! We couldn't find that card.</Text>
               )}
             </ModalComponent>
             <ModalComponent
@@ -301,7 +322,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   accent: {
-    color: "#9a5341",
+    color: "#765023",
   },
   header: {
     color: "#843b2d",
@@ -310,7 +331,7 @@ const styles = StyleSheet.create({
     fontSize: 64,
   },
   button: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     width: "80%",
     padding: 10,
     borderRadius: 10,
@@ -323,7 +344,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     padding: 8,
-    color: "#9a5341",
+    color: "#765023",
     textAlign: "center",
     fontFamily: "typewriter",
   },
@@ -343,12 +364,12 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   backButtonText: {
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "rocker",
     fontSize: 40,
   },
   swipePreview: {
-    backgroundColor: "#9a5341",
+    backgroundColor: "#765023",
     display: "flex",
     flex: 1,
     justifyContent: "center",
@@ -371,6 +392,20 @@ const styles = StyleSheet.create({
   },
   swipePreviewTextRight: {
     transform: [{ rotate: "90deg" }],
+  },
+  teaserContainer: {
+    position: "relative",
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginHorizontal: 10,
+  },
+  teaserButton: {
+    width: 50,
+    height: 50,
+    resizeMode: "center",
   },
 });
 

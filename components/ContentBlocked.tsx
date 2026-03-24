@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: "center",
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "typewriter",
   },
   description: {
     fontSize: 16,
     textAlign: "left",
-    color: "#9a5341",
+    color: "#765023",
     fontFamily: "typewriter",
     marginBottom: 10,
   },
