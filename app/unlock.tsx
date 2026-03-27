@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     padding: 8,
-    color: "#843b2d",
+    color: "#000",
     textAlign: "left",
     fontFamily: "typewriter",
   },

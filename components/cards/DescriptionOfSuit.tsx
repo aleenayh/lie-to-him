@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     textAlign: "center",
-    color: "#765023",
+    color: "#000",
     fontFamily: "typewriter",
   },
   imageContainer: {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     textAlign: "center",
-    color: "#765023",
+    color: "#000",
     fontFamily: "typewriter",
     marginBottom: 10,
   },
