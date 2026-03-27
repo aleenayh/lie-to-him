@@ -126,14 +126,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   text: {
-    color: "#765023",
+    color: "#000",
     fontSize: 12,
     padding: 8,
     textAlign: "left",
     fontFamily: "typewriter",
   },
   credit: {
-    color: "#843b2d",
+    color: "#000",
     fontFamily: "rocker",
     fontSize: 16,
   },

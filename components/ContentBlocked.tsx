@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     textAlign: "left",
-    color: "#765023",
+    color: "#000",
     fontFamily: "typewriter",
     marginBottom: 10,
   },

@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     padding: 8,
     fontFamily: "typewriter",
     textAlign: "center",
-    color: "#765023",
+    color: "#000",
   },
   header: {
     color: "#843b2d",

@@ -95,14 +95,8 @@ const styles = StyleSheet.create({
     fontFamily: "typewriter",
     fontSize: 24,
   },
-  linkText: {
-    color: "#843b2d",
-    textDecorationLine: "underline",
-    fontFamily: "typewriter",
-    fontSize: 12,
-  },
   text: {
-    color: "#765023",
+    color: "#000",
     fontSize: 18,
     padding: 8,
     textAlign: "left",

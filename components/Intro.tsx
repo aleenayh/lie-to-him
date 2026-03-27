@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     maxWidth: "70%",
     fontSize: 24,
     fontFamily: "typewriter",
-    color: "#765023",
+    color: "#000",
     textAlign: "center",
     paddingVertical: 16,
   },

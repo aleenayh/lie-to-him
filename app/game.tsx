@@ -321,9 +321,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
-  accent: {
-    color: "#765023",
-  },
   header: {
     color: "#843b2d",
     marginBottom: 8,
@@ -344,7 +341,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     padding: 8,
-    color: "#765023",
+    color: "#000",
     textAlign: "center",
     fontFamily: "typewriter",
   },
