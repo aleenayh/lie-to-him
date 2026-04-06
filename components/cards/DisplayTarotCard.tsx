@@ -23,7 +23,7 @@ export default function DisplayTarotCard({
   inputs: CardDetailInputs;
 }) {
   const { card, reversed, drawnIsHigher, difference } = inputs;
-  const description = getDescription(card, reversed);
+  const description = getDescription(card, reversed, drawnIsHigher);
   const textOpacity = useSharedValue(1);
 
   const fadeOut = useCallback(() => {
@@ -152,19 +152,31 @@ const styles = StyleSheet.create({
   },
 });
 
-function getDescription(card: CardDetails, reversed: boolean) {
+function getDescription(
+  card: CardDetails,
+  reversed: boolean,
+  drawnIsHigher: boolean,
+) {
   if (card.type === "majorArcana") {
     return reversed ? card.descriptionReversed : card.descriptionUpright;
   }
   switch (card.type) {
     case "wands":
-      return "Appeal to his emotions. He doubts you when your passion is performative. He believes you when you break his heart.";
+      return drawnIsHigher
+        ? "Appeal to his emotions. He believes you when you break his heart."
+        : "Appeal to his emotions. He doubts you when your passion is performative.";
     case "cups":
-      return "Overwhelm him with details. He doubts you when the details begin to contradict each other. He believes you when the specificity feels real.";
+      return drawnIsHigher
+        ? "Overwhelm him with details. He believes you when the specificity feels real."
+        : "Overwhelm him with details. He doubts you when the details begin to contradict each other.";
     case "pentacles":
-      return "Disarm him with logic. He doubts you when your argument is fallacious or circular. He believes you when you confuse him with complexity.";
+      return drawnIsHigher
+        ? "Disarm him with logic. He believes you when you confuse him with complexity."
+        : "Disarm him with logic. He doubts you when your argument is fallacious or circular.";
     case "swords":
-      return "Intimidate him with your certainty. He doubts you when his anger rears its head in response. He believes you when the force of your argument beats his doubts away.";
+      return drawnIsHigher
+        ? "Intimidate him with your certainty. He believes you when the force of your argument beats his doubts away."
+        : "Intimidate him with your certainty. He doubts you when his anger rears its head in response.";
   }
 }
 
