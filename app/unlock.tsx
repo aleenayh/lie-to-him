@@ -17,7 +17,7 @@ import {
 const skeletonImage = require("../assets/images/skeleton.svg");
 
 export default function Unlock() {
-  const { contentUnlocked, updateContentUnlocked } = useGame();
+  const { contentUnlocked, updateContentUnlocked} = useGame();
   const [code, setCode] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -62,16 +62,18 @@ export default function Unlock() {
 
           <View style={styles.columnStack}>
             <Text style={[styles.text]}>
-              You can play a demo of the game for free. To unlock the full game,
-              enter your access code below.
+              This app is intended as a mobile companion to the zine, which
+              includes full game rules and artwork.
             </Text>
             <Text style={[styles.text]}>
-              (If you backed the game on Backerkit or bought it on itch.io, you
-              should have received an access code with your purchase!)
+              For the full app experience, please enter your access code below.
+              If you already purchased the zine, find your access code on the
+              final page!
             </Text>
 
             <TextInput
               style={styles.input}
+              placeholderTextColor="#765023"
               placeholder="Enter your access code"
               onChangeText={(e) => setCode(e)}
               value={code}
@@ -137,7 +139,6 @@ const styles = StyleSheet.create({
     fontSize: 64,
   },
   columnStack: {
-    backgroundColor: "rgba(255, 239, 213, 0.5)",
     borderRadius: 15,
     display: "flex",
     flexDirection: "column",
