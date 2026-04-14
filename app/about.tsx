@@ -1,4 +1,5 @@
 import { BackgroundTexture } from "@components/BackgroundTexture";
+import { useGame } from "@state/Context";
 import { Image } from "expo-image";
 import { Link, router } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
@@ -6,6 +7,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 const skeletonImage = require("../assets/images/skeleton.svg");
 
 export default function About() {
+  const { deviceType } = useGame();
   return (
     <View style={styles.container}>
       <BackgroundTexture />
@@ -13,6 +15,14 @@ export default function About() {
       <Image source={skeletonImage} style={styles.backgroundImageReversed} />
       <Text style={styles.header}>Lie To Him</Text>
       <View style={styles.interior}>
+        {deviceType === "ios" && (
+          <Text style={[styles.text]}>
+            This app is intended as a mobile companion to the zine, which
+            includes full game rules and artwork. If you haven't already
+            purchased the zine, consider doing so through Michelle's itch.io link
+            below!
+          </Text>
+        )}
         <View style={styles.columnStack}>
           <Text style={styles.credit}>Game Design by Michelle Kelly</Text>
           <Link href="https://michellicopter.itch.io">
