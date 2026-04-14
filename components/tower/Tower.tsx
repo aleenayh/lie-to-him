@@ -30,18 +30,21 @@ export default function Tower({
   }, [remainingBlockPulls, setContinueButtonEnabled, tower.collapsed]);
 
   const textOpacity = useSharedValue(1);
-  const fadeOut = useCallback(() => {
-    textOpacity.value = withTiming(0, {
-      duration: 1500,
-      easing: Easing.linear,
-    });
-  }, [textOpacity]);
+  const fadeOut = useCallback(
+    (duration: number) => {
+      textOpacity.value = withTiming(0, {
+        duration,
+        easing: Easing.linear,
+      });
+    },
+    [textOpacity],
+  );
 
   useEffect(() => {
-    if (tower.collapsed || remainingBlockPulls <= 0) {
-      fadeOut();
+    if (tower.collapsed) {
+      fadeOut(1500);
     }
-  }, [fadeOut, tower.collapsed, remainingBlockPulls]);
+  }, [fadeOut, tower.collapsed]);
   const fadingStyle = useAnimatedStyle(() => {
     return {
       ...styles.text,
@@ -62,6 +65,9 @@ export default function Tower({
     blockIndex: number,
     velocity: number,
   ) => {
+    if (remainingBlockPulls === 1) {
+      fadeOut(0);
+    }
     setRemainingBlockPulls((prev) => prev - 1);
 
     let shouldCollapse = false;
