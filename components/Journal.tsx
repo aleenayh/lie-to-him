@@ -1,5 +1,6 @@
 import { useGame } from "@state/Context";
 import * as Clipboard from "expo-clipboard";
+import { Image } from "expo-image";
 import { useState } from "react";
 import {
   Keyboard,
@@ -13,6 +14,8 @@ import {
   View,
 } from "react-native";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+
+const skullImage = require("../assets/images/skullLight.svg");
 
 export default function Journal({ onSwipeAway }: { onSwipeAway: () => void }) {
   return (
@@ -33,6 +36,23 @@ export default function Journal({ onSwipeAway }: { onSwipeAway: () => void }) {
       >
         <Text style={styles.header}>Journal</Text>
         <JournalInterior variant="tan" />
+
+        <Pressable
+          onPress={onSwipeAway}
+          style={{
+            position: "absolute",
+            left: 10,
+            bottom: 15,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-end",
+            justifyContent: "center",
+            gap: 4,
+          }}
+        >
+          <Image source={skullImage} style={styles.teaserButton} />
+          <Text style={[styles.header, { fontSize: 18 }]}>Back to Game</Text>
+        </Pressable>
       </Pressable>
     </Swipeable>
   );
@@ -173,5 +193,10 @@ const styles = StyleSheet.create({
   },
   swipePreviewTextLeft: {
     transform: [{ rotate: "-90deg" }],
+  },
+  teaserButton: {
+    width: 50,
+    height: 50,
+    resizeMode: "center",
   },
 });
