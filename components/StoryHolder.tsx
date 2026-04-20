@@ -36,7 +36,10 @@ export default function StoryHolder() {
         <Text style={styles.title}> Your Story</Text>
         <View style={styles.row}>
           <Pressable
-            style={[styles.imageContainer]}
+            style={[
+              styles.imageContainer,
+              story.swords.flipped && styles.imageFlipped,
+            ]}
             onPress={() => openModalForSuit("swords")}
           >
             <Animated.Image
@@ -48,7 +51,10 @@ export default function StoryHolder() {
             />
           </Pressable>
           <Pressable
-            style={[styles.imageContainer]}
+            style={[
+              styles.imageContainer,
+              story.wands.flipped && styles.imageFlipped,
+            ]}
             onPress={() => openModalForSuit("wands")}
           >
             <Animated.Image
@@ -60,7 +66,10 @@ export default function StoryHolder() {
             />
           </Pressable>
           <Pressable
-            style={[styles.imageContainer]}
+            style={[
+              styles.imageContainer,
+              story.cups.flipped && styles.imageFlipped,
+            ]}
             onPress={() => openModalForSuit("cups")}
           >
             <Animated.Image
@@ -72,7 +81,10 @@ export default function StoryHolder() {
             />
           </Pressable>
           <Pressable
-            style={[styles.imageContainer]}
+            style={[
+              styles.imageContainer,
+              story.pentacles.flipped && styles.imageFlipped,
+            ]}
             onPress={() => openModalForSuit("pentacles")}
           >
             <Animated.Image
@@ -129,12 +141,23 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
+    height: "90%",
+    width: "90%",
     display: "flex",
+    backgroundColor: "transparent",
+    opacity: 1,
   },
   image: {
     resizeMode: "contain",
     width: "auto",
     height: 150,
+  },
+  imageFlipped: {
+    shadowColor: "black",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.74,
+    elevation: 3,
   },
 });
 
