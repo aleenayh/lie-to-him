@@ -2,11 +2,11 @@ import { useGame } from "@state/Context";
 import type { GameState } from "@state/schema";
 import { useState } from "react";
 import {
-    type ImageSourcePropType,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
+  type ImageSourcePropType,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import Animated, { FlipInEasyX, FlipOutEasyX } from "react-native-reanimated";
 import { tarotImages } from "../assets/images/tarot";
@@ -163,15 +163,19 @@ function findImagesFromValues(story: GameState["story"]): {
   const pentacles = cleanedValue(story.pentacles.cardValue);
   const swords = cleanedValue(story.swords.cardValue);
 
-  const flippedImg = tarotImages.cardBack;
-
   const images = {
-    wands: story.wands.flipped ? flippedImg : tarotImages[`wands_${wands}`],
-    cups: story.cups.flipped ? flippedImg : tarotImages[`cups_${cups}`],
+    wands: story.wands.flipped
+      ? tarotImages.wands_back
+      : tarotImages[`wands_${wands}`],
+    cups: story.cups.flipped
+      ? tarotImages.cups_back
+      : tarotImages[`cups_${cups}`],
     pentacles: story.pentacles.flipped
-      ? flippedImg
+      ? tarotImages.pent_back
       : tarotImages[`pent_${pentacles}`],
-    swords: story.swords.flipped ? flippedImg : tarotImages[`swords_${swords}`],
+    swords: story.swords.flipped
+      ? tarotImages.swords_back
+      : tarotImages[`swords_${swords}`],
   };
   return images;
 }

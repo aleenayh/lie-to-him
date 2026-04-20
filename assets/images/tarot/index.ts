@@ -78,13 +78,15 @@ const wands_king = require("./wands_king.webp");
 const wands_knight = require("./wands_knight.webp");
 const wands_page = require("./wands_page.webp");
 const wands_queen = require("./wands_queen.webp");
-const cardBack = require("./back.webp");
+const wands_back = require("./wands_back.webp");
+const cups_back = require("./cups_back.webp");
+const pent_back = require("./pent_back.webp");
+const swords_back = require("./swords_back.webp");
 
 export const tarotImages: Record<string, ImageSourcePropType> = {
   ma_priestess,
   ma_star,
   ma_judgement,
-  cardBack,
   ma_chariot,
   ma_hierophant,
   ma_empress,
@@ -160,4 +162,8 @@ export const tarotImages: Record<string, ImageSourcePropType> = {
   cups_queen,
   cups_knight,
   cups_page,
+  cups_back,
+  pent_back,
+  swords_back,
+  wands_back,
 };
